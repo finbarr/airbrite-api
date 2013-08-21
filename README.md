@@ -28,6 +28,7 @@ API Endpoints:
 
 * /v2/orders
 * /v2/products
+* /v2/account
 
 Remember to set the HTTP header on all POST/PUT requests:
 
