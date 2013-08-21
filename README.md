@@ -181,7 +181,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: 
+    Optional: since/from, until/to
 
 
 ### Update order
@@ -231,14 +231,14 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: 
+    Optional: since/from, until/to
 
 
 ### Update product
 
 __Endpoint__
 
-    PUT https://api.airbrite.io/v2/products/{PRUDCT_ID}
+    PUT https://api.airbrite.io/v2/products/{PRODUCT_ID}
 
 __Arguments__
 
