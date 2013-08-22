@@ -117,7 +117,7 @@ __Body__
             {
                 "sku": "12345ABC",
                 "price": 15000,
-                "qty": 1
+                "quantity": 1
             }
         ],
         "shipping_address": {
@@ -153,7 +153,7 @@ __Body__
             "tracking": "1ZXXXXXXXXXXXX",
             "line_items": [{
                 "sku": "12345ABC",
-                "qty": 1
+                "quantity": 1
             }]
         }],
         "metadata": {
