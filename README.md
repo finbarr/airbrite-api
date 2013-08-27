@@ -3,17 +3,29 @@
 * [Introduction](#introduction)
 * [Authentication](#authentication)
 
+Products
+* [Create a product](#create-product)
+* [Retrieve a single product](#retrieve-product)
+* [List all products](#list-all-product)
+* [Update a product](#update-product)
+
 Orders
 * [Create an order](#create-order)
 * [Retrieve a single order](#retrieve-order)
 * [List all orders](#list-all-orders)
 * [Update an order](#update-order)
 
-Products
-* [Create a product](#create-product)
-* [Retrieve a single product](#retrieve-product)
-* [List all products](#list-all-product)
-* [Update a product](#update-product)
+Payments
+* [Create a payment](#create-payment)
+* [Retrieve a payment](#retrieve-payment)
+* [List all payments](#list-all-payments)
+* [Refund a payment](#refund-payment)
+
+Shipments
+* [Create a shipment](#create-shipment)
+* [Retrieve a shipment](#retrieve-shipment)
+* [List all shipments](#list-all-shipments)
+* [Update a shipmen](#update-shipment)
 
 Account
 * [Retrieve account details](#retrieve-account)
@@ -26,8 +38,17 @@ The base endpoint URL is: `https://api.airbrite.io`
 
 API Endpoints:
 
+* /v2/customers
+* /v2/customers/{CUSTOMER_ID}
 * /v2/orders
+* /v2/orders/{ORDER_ID}
+* /v2/orders/{ORDER_ID}/payments
+* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
+* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
+* /v2/orders/{ORDER_ID}/shipments
+* /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
 * /v2/products
+* /v2/products/{PRODUCT_ID}
 * /v2/account
 
 Remember to set the HTTP header on all POST/PUT requests:
@@ -43,54 +64,112 @@ All endpoints are authenticated. To authenticate, send an HTTP header with the a
 
     "Authorization: Basic sk_test_xxxxxxxxxxxxxxxxxxxxxxxxx"
 
+
+## Products
+
+### Create product
+
+__Endpoint__
+
+    POST https://api.airbrite.io/v2/products
+
+__Arguments__
+
+    Required: sku, price, name
+    Optional: none
+
+
+### Retrieve product
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/products/{PRODUCT_ID}
+
+__Arguments__
+
+    Required: product_id
+    Optional: none
+
+
+### List all products
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/products
+
+__Arguments__
+
+    Required: none
+    Optional: since/from, until/to
+
+
+### Update product
+
+__Endpoint__
+
+    PUT https://api.airbrite.io/v2/products/{PRODUCT_ID}
+
+__Arguments__
+
+    Required: product_id
+    Optional: 
+
+
+
+
 ## Orders
 
 ### Create Order
 
 The order resource contains a metadata field for storing key-value pairs of extra data. Store as many of these key-value pairs as you wish.
 
-Regarding payments, the order can be created with either 1) existing payment data (already charged), or 2) a Stripe card token (new payment upon order creation).
+Regarding line_items, your SKU should be already created.
 
-If using Stripe, the payment method should be pre-tokenized with `stripe.js` before the order is created. With Stripe, there are three ways to create orders.
+Regarding payments, the order can be created with either:
+1) no prior payment data
+2) existing payment data (already charged)
+3) a Stripe card token (new payment upon order creation)
 
-* At order creation, charge the payment card once and only once (single-use)
+If using Stripe, the payment card should be tokenized with `stripe.js` before the order is created. With Stripe, there are three ways to create payments for orders.
+
+* At order creation, capture funds immediately
 
         {
             ...,
             "payments": [{
                 "gateway": "stripe",
-                "amount": 1337,    // amount > 0
+                "amount": 1337,
                 "currency": "usd",
                 "card_token": "tok_XXXXXXXXXXXXXX",
-                "create_stripe_customer": false    // set to false
+                "capture": "charge"
             }],
             ...
         }
 
-* At order creation, save payment card to be charged at a future date (multi-use)  
+* At order creation, place an authorization/hold on the card (will drop off after ~7 days unless captured)
 
         {
             ...,
             "payments": [{
                 "gateway": "stripe",
-                "amount": 0,    // amount = 0
+                "amount": 1337,
                 "currency": "usd",
                 "card_token": "tok_XXXXXXXXXXXXXX",
-                "create_stripe_customer": true    // set to true
+                "capture": "auth"
             }],
             ...
         }
 
-* At order creation, charge payment card now, and save payment card to be charged again at a future date (multi-use)
+* At order creation, save payment card to be charged at a future date
 
         {
             ...,
             "payments": [{
                 "gateway": "stripe",
-                "amount": 1337,    // amount > 0
+                "amount": 1337,
                 "currency": "usd",
                 "card_token": "tok_XXXXXXXXXXXXXX",
-                "create_stripe_customer": true    // set to true
+                "capture": "hold"
             }],
             ...
         }
@@ -102,7 +181,7 @@ __Endpoint__
 
 __Arguments__
 
-    Required: customer
+    Required: customer (email address)
     Optional: line_items, shipping_address, shipping, tax, discount, payments, shipments, metadata
 
 __Body__
@@ -110,13 +189,11 @@ __Body__
     {
         "customer": {
             "name": "Jack Dagnels",
-            "email": "jack@dagnels.ru",
-            "phone": "4157875227"
+            "email": "jack@dagnels.ru"
         },
         "line_items": [
             {
                 "sku": "12345ABC",
-                "price": 15000,
                 "quantity": 1
             }
         ],
@@ -128,7 +205,7 @@ __Body__
             "city": "San Francisco",
             "state": "CA",
             "zip": "94105",
-            "country": "US"
+            "country": "US",
         },
         "tax": {
             "cost": 89
@@ -144,8 +221,8 @@ __Body__
             "gateway": "stripe",
             "amount": 1337,
             "currency": "usd",
-            "card_token": "tok_XXXXXXXXXXXXXX",
-            "create_stripe_customer": false
+            "card_token": "tok_XXXXXXXXXXXXXX"
+            "capture": "charge"
         }],
         "shipments": [{
             "courier": "ups",
@@ -187,6 +264,12 @@ __Arguments__
 
 ### Update order
 
+To update an order (with the exception of customer, payments, and shipping), you can make a PUT request to the endpoint in this section. To create or update customer, payments, or shipments, please use the following endpoints:
+
+* https://api.airbrite.io/v2/orders/{ORDER_ID}/customers
+* https://api.airbrite.io/v2/orders/{ORDER_ID}/payments
+* https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments
+
 __Endpoint__
 
     PUT https://api.airbrite.io/v2/orders/{ORDER_ID}
@@ -194,40 +277,40 @@ __Endpoint__
 __Arguments__
 
     Required: order_id
-    Optional: 
+    Optional: line_items, shipping_address, shipping, tax, discount, metadata
 
 
-## Products
+## Payments
 
-### Create product
+### Create payment
 
 __Endpoint__
 
-    POST https://api.airbrite.io/v2/products
+    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/payments
 
 __Arguments__
 
-    Required: 
-    Optional: none
+    Required: gateway, currency, amount
+    Optional: card_token, capture, metadata
 
 
-### Retrieve product
+### Retrieve payment
 
 __Endpoint__
 
-    GET https://api.airbrite.io/v2/products/{PRODUCT_ID}
+    GET https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
 
 __Arguments__
 
-    Required: product_id
+    Required: payment_id
     Optional: none
 
 
-### List all products
+### List all payments
 
 __Endpoint__
 
-    GET https://api.airbrite.io/v2/products
+    GET https://api.airbrite.io/v2/orders/{ORDER_ID}/payments
 
 __Arguments__
 
@@ -235,16 +318,68 @@ __Arguments__
     Optional: since/from, until/to
 
 
-### Update product
+### Refund payment
 
 __Endpoint__
 
-    PUT https://api.airbrite.io/v2/products/{PRODUCT_ID}
+    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
 
 __Arguments__
 
-    Required: product_id
+    Required: payment_id
     Optional: 
+
+
+## Shipments
+
+### Create shipment
+
+__Endpoint__
+
+    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments
+
+__Arguments__
+
+    Required: line_items
+    Optional: courier, shipping_address, tracking, method, metadata
+
+
+### Retrieve shipment
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
+
+__Arguments__
+
+    Required: shipment_id
+    Optional: none
+
+
+### List all shipments
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments
+
+__Arguments__
+
+    Required: none
+    Optional: since/from, until/to
+
+
+### Refund payment
+
+__Endpoint__
+
+    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}/refund
+
+__Arguments__
+
+    Required: shipment_id
+    Optional: 
+
+
 
 
 ## Account
