@@ -377,7 +377,7 @@ __Endpoint__
 __Arguments__
 
     Required: shipment_id
-    Optional: 
+    Optional: none
 
 
 
