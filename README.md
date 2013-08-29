@@ -62,7 +62,7 @@ All currency amounts and costs are in CENTS!
 
 All endpoints are authenticated. To authenticate, send an HTTP header with the access token:
 
-    "Authorization: Basic sk_test_xxxxxxxxxxxxxxxxxxxxxxxxx"
+    "Authorization: Bearer sk_test_xxxxxxxxxxxxxxxxxxxxxxxxx"
 
 
 ## Products
