@@ -25,7 +25,6 @@ Shipments
 * [Create a shipment](#create-shipment)
 * [Retrieve a shipment](#retrieve-shipment)
 * [List all shipments](#list-all-shipments)
-* [Update a shipmen](#update-shipment)
 
 Account
 * [Retrieve account details](#retrieve-account)
