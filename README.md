@@ -368,20 +368,6 @@ __Arguments__
     Optional: since/from, until/to
 
 
-### Refund payment
-
-__Endpoint__
-
-    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}/refund
-
-__Arguments__
-
-    Required: shipment_id
-    Optional: none
-
-
-
-
 ## Account
 
 ### Retrieve account
