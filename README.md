@@ -6,7 +6,7 @@
 Products
 * [Create a product](#create-product)
 * [Retrieve a single product](#retrieve-product)
-* [List all products](#list-all-product)
+* [List all products](#list-all-products)
 * [Update a product](#update-product)
 
 Orders
