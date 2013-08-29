@@ -112,7 +112,7 @@ __Endpoint__
 __Arguments__
 
     Required: product_id
-    Optional: 
+    Optional: none
 
 
 
@@ -291,7 +291,7 @@ __Endpoint__
 __Arguments__
 
     Required: gateway, currency, amount
-    Optional: card_token, capture, metadata
+    Optional: (card_token and capture OR charge_token), metadata
 
 
 ### Retrieve payment
