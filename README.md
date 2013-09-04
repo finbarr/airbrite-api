@@ -397,7 +397,7 @@ __Body__
             "state_rate": "0.065",
             "county_rate": "0.01",
             "city_rate": "0",
-            "special_rate": "0.0125",
+            "special_rate": "0.0125"
         }
     }
 
