@@ -32,6 +32,11 @@ Taxes
 Account
 * [Retrieve account details](#retrieve-account)
 
+Events
+* [Retrieve an event](#retrieve-event)
+* [List all events](#list-all-events)
+* [Types of events](#types-of-events)
+
 ## Introduction
 
 The Airbrite API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and to use HTTP response codes to indicate API errors.
@@ -53,6 +58,7 @@ API Endpoints:
 * /v2/products/{PRODUCT_ID}
 * /v2/tax
 * /v2/account
+* /v2/events
 
 Remember to set the HTTP header on all POST/PUT requests:
 
@@ -414,3 +420,45 @@ __Arguments__
 
     Required: none
     Optional: none
+
+
+## Events
+
+### Retrieve an event
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/events/{EVENT_ID}
+
+__Arguments__
+
+    Required: none
+    Optional: none
+
+
+### List all events
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/events
+
+__Arguments__
+
+    Required: none
+    Optional: since/from, until/to
+
+
+### Types of events
+
+This is a list of all the types of events we currently send. We may add more at any time, so you shouldn't rely on only these types existing in your code.
+
+You'll notice that these events follow a pattern: resource.event. Our goal is to design a consistent system that makes things easier to anticipate and code against.
+
+__Events__
+
+* order.created
+* order.updated
+* order.payment.charged
+* order.payment.authed
+* order.payment.captured
+* order.payment.refunded
