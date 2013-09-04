@@ -26,6 +26,9 @@ Shipments
 * [Retrieve a shipment](#retrieve-shipment)
 * [List all shipments](#list-all-shipments)
 
+Taxes
+* [Retrieve sales tax](#retrieve-sales-tax)
+
 Account
 * [Retrieve account details](#retrieve-account)
 
@@ -48,6 +51,7 @@ API Endpoints:
 * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
 * /v2/products
 * /v2/products/{PRODUCT_ID}
+* /v2/tax
 * /v2/account
 
 Remember to set the HTTP header on all POST/PUT requests:
@@ -365,6 +369,37 @@ __Arguments__
 
     Required: none
     Optional: since/from, until/to
+
+
+## Taxes
+
+### Retrieve sales tax
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/tax
+
+__Arguments__
+
+    Required: zip, nexus_zips (comma separated)
+    Optional: amount
+
+__Body__
+
+    {
+        "meta": {
+            "code": 200,
+        },
+        "data": {
+            "amount": "1000",
+            "tax_amount": "88",
+            "tax_rate": "0.0875",
+            "state_rate": "0.065",
+            "county_rate": "0.01",
+            "city_rate": "0",
+            "special_rate": "0.0125",
+        }
+    }
 
 
 ## Account
