@@ -459,6 +459,6 @@ __Events__
 * order.created
 * order.updated
 * order.payment.suceeded
-* order.payment.authed
+* order.payment.authorized
 * order.payment.captured
 * order.payment.refunded
