@@ -84,8 +84,8 @@ __Endpoint__
 
 __Arguments__
 
-    Required: sku, price, name
-    Optional: none
+    Required: sku, price
+    Optional: name
 
 
 ### Retrieve product
@@ -109,7 +109,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: since/from, until/to
+    Optional: since/from, until/to, sort, order
 
 
 ### Update product
@@ -268,7 +268,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: since/from, until/to
+    Optional: since/from, until/to, sort, order
 
 
 ### Update order
@@ -299,7 +299,7 @@ __Endpoint__
 
 __Arguments__
 
-    Required: gateway, currency, amount
+    Required: order_id, gateway, currency, amount
     Optional: (card_token and capture OR charge_token), metadata
 
 
@@ -311,7 +311,7 @@ __Endpoint__
 
 __Arguments__
 
-    Required: payment_id
+    Required: order_id, payment_id
     Optional: none
 
 
@@ -323,8 +323,8 @@ __Endpoint__
 
 __Arguments__
 
-    Required: none
-    Optional: since/from, until/to
+    Required: order_id
+    Optional: since/from, until/to, sort, order
 
 
 ### Refund payment
@@ -335,8 +335,8 @@ __Endpoint__
 
 __Arguments__
 
-    Required: payment_id
-    Optional: 
+    Required: order_id, payment_id
+    Optional: amount
 
 
 ## Shipments
@@ -349,7 +349,7 @@ __Endpoint__
 
 __Arguments__
 
-    Required: line_items
+    Required: order_id, line_items
     Optional: courier, shipping_address, tracking, method, metadata
 
 
@@ -361,7 +361,7 @@ __Endpoint__
 
 __Arguments__
 
-    Required: shipment_id
+    Required: order_id, shipment_id
     Optional: none
 
 
@@ -373,8 +373,8 @@ __Endpoint__
 
 __Arguments__
 
-    Required: none
-    Optional: since/from, until/to
+    Required: order_id
+    Optional: since/from, until/to, sort, order
 
 
 ## Taxes
@@ -432,7 +432,7 @@ __Endpoint__
 
 __Arguments__
 
-    Required: none
+    Required: event_id
     Optional: none
 
 
@@ -445,7 +445,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: since/from, until/to
+    Optional: since/from, until/to, sort, order
 
 
 ### Types of events
@@ -458,7 +458,7 @@ __Events__
 
 * order.created
 * order.updated
-* order.payment.suceeded
+* order.payment.succeeded
 * order.payment.authorized
 * order.payment.captured
 * order.payment.refunded
