@@ -19,6 +19,7 @@ Payments
 * [Create a payment](#create-payment)
 * [Retrieve a payment](#retrieve-payment)
 * [List all payments](#list-all-payments)
+* [Capture a payment](#capture-payment)
 * [Refund a payment](#refund-payment)
 
 Shipments
@@ -51,6 +52,7 @@ API Endpoints:
 * /v2/orders/{ORDER_ID}
 * /v2/orders/{ORDER_ID}/payments
 * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
+* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
 * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
 * /v2/orders/{ORDER_ID}/shipments
 * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
@@ -59,6 +61,7 @@ API Endpoints:
 * /v2/tax
 * /v2/account
 * /v2/events
+* /v2/events/{EVENT_ID}
 
 Remember to set the HTTP header on all POST/PUT requests:
 
@@ -214,7 +217,7 @@ __Body__
             "city": "San Francisco",
             "state": "CA",
             "zip": "94105",
-            "country": "US",
+            "country": "US",  // two-letter ISO code
         },
         "tax": {
             "cost": 89
@@ -325,6 +328,19 @@ __Arguments__
 
     Required: order_id
     Optional: since/from, until/to, sort, order
+
+
+### Capture payment
+
+__Endpoint__
+
+    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
+
+__Arguments__
+
+    Required: order_id, payment_id
+    Optional: none
+
 
 
 ### Refund payment
