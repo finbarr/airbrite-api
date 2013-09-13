@@ -51,8 +51,8 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 ## Getting Started
 
 * The base endpoint URL is: `https://api.airbrite.io`
-* Your access tokens can be found in "My Account"
-* To process payments, you must connect to Stripe, which can be done in "My Account"
+* Your access tokens can be found in your account settings
+* To process payments, you must connect to Stripe, which can be done in your account settings
 * There are two environments: live and test
 * Currency amounts and costs are in cents
 
@@ -514,6 +514,10 @@ __Arguments__
 
 
 ## Events
+
+Events are our way of letting you know about something interesting that has just happened in your account. When an interesting event occurs, we create a new event object. For example, when a payment is successfully charged, we create a order.payment.succeeded event. Note that many API requests may cause multiple events to be created.
+
+Like our other API resources, you can retrieve an individual event or a list of events from the API. We also have a system for sending the events directly to your server, called webhooks. Webhooks are managed in your account settings.
 
 ### Retrieve an event
 
