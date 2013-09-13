@@ -3,6 +3,7 @@
 * [Introduction](#introduction)
 * [Getting Started](#getting-started)
 * [Authentication](#authentication)
+* [Errors](#errors)
 
 Products
 * [Create a product](#create-product)
@@ -91,9 +92,23 @@ All endpoints require authentication. To authenticate with HTTP header, there ar
 * Authorization: Basic {BASE64_ENCODED_ACCESS_TOKEN}
 * Authorization: Bearer {ACCESS_TOKEN}
 
-Alternatively, you can pass access_token in via query string.  This can be particularly useful in debugging GET requests.  You can simply add "?access_token={access_token}" to any request to authenticate.
+Alternatively, you can authenticate via query string by simply adding '?access_token={ACCESS_TOKEN}' to any request.
 
 
+## Errors
+
+Airbrite uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and codes in the 5xx range indicate an error with Airbrite's servers.
+
+Our errors have the format: 
+
+    {
+        "meta": {
+            "code": 400,
+            "error_message": "User with email already exists.",
+            "error_type": "client_error"
+    },
+        "data": "User with email already exists."
+    }
 
 
 ## Products
