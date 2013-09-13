@@ -59,7 +59,7 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 
 ## Authentication
 
-Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used on the client-side and will authenticate for only POST requests to Orders. Secret keys are used by your servers to make requests to the Airbrite API.
+Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used only on the client-side and will authenticate for only POST requests to Orders. Secret keys are used by your servers to make requests to the Airbrite API.
 
 All endpoints require authentication. To authenticate with HTTP header, there are 3 methods you can your header, where {ACCESS_TOKEN} is "sk_test_xxx" or "sk_live_xxx":
 
@@ -72,7 +72,7 @@ Alternatively, you can authenticate via query string by simply adding `?access_t
 
 ## Organization
 
-The API is organized by version of the API and resource (/{VERSION}/{RESOURCE}). The current version of the API is v2. For example, to reach the products end point, you would access /v2/products. To access a resource with a particular ID the route is /{VERSION}/{RESOURCE}/{id}, or /v2/products/52323272fa361e040c000001.
+The API is organized by version of the API and resource: `/{VERSION}/{RESOURCE}`. The current version of the API is `v2`. For example, to reach the Products endpoint, you would access `/v2/products`. To access a resource with a specific ID, the route is `/{VERSION}/{RESOURCE}/{id}`, or `/v2/products/52323272fa361e040c000001`.
 
 These resources have full CRUD support:
 
@@ -547,9 +547,13 @@ You'll notice that these events follow a pattern: resource.event. Our goal is to
 
 __Events__
 
+* customer.created
+* customer.updated
 * order.created
 * order.updated
 * order.payment.succeeded
 * order.payment.authorized
 * order.payment.captured
 * order.payment.refunded
+* product.created
+* product.updated
