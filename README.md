@@ -56,31 +56,6 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 * There are two environments: live and test
 * Currency amounts and costs are in cents
 
-API Endpoints:
-
-* /v2/customers
-* /v2/customers/{CUSTOMER_ID}
-* /v2/orders
-* /v2/orders/{ORDER_ID}
-* /v2/orders/{ORDER_ID}/payments
-* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
-* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
-* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
-* /v2/orders/{ORDER_ID}/shipments
-* /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
-* /v2/products
-* /v2/products/{PRODUCT_ID}
-* /v2/tax
-* /v2/account
-* /v2/events
-* /v2/events/{EVENT_ID}
-* /v2/logs
-* /v2/logs/{LOG_ID}
-
-Remember to set the HTTP header on all POST/PUT requests:
-
-    "Content-Type: application/json"
-
 
 ## Authentication
 
@@ -93,6 +68,68 @@ All endpoints require authentication. To authenticate with HTTP header, there ar
 * Authorization: Bearer {ACCESS_TOKEN}
 
 Alternatively, you can authenticate via query string by simply adding `?access_token={ACCESS_TOKEN}` to any request.
+
+
+## Organization
+
+The API is organized by version of the API and resource (/{VERSION}/{RESOURCE}). The current version of the API is v2. For example, to reach the products end point, you would access /v2/products. To access a resource with a particular ID the route is /{VERSION}/{RESOURCE}/{id}, or /v2/products/52323272fa361e040c000001.
+
+These resources have full CRUD support:
+
+* Products (/v2/products)
+* Orders
+* Customers
+
+These resources have read-only CRUD support:
+
+* Events
+* Logs
+
+Because of the inherent complexity of ecommerce, the API also has a number of child resources (or subcollections). Child resources are accessible via the route "/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}" and are related to the parent, and a particular resource can be accessed at "../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}". 
+
+* Products
+  + Events
+* Orders
+  + Payments (/v2/orders/{ORDER_ID}/payments)
+  + Shipments
+  + Events (/v2/orders/{ORDER_ID}/events - read-only)
+* Customers
+  + Events
+  + Orders
+* Events
+  + Webhooks (/v2/events/{EVENT_ID}/webhooks)
+
+
+## List of Routes
+
+* Customers
+  * /v2/customers
+  * /v2/customers/{CUSTOMER_ID}
+
+* Orders
+  * /v2/orders
+  * /v2/orders/{ORDER_ID}
+  * /v2/orders/{ORDER_ID}/payments
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
+  * /v2/orders/{ORDER_ID}/shipments
+  * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
+
+* Products
+  * /v2/products
+  * /v2/products/{PRODUCT_ID}
+
+* Taxes
+  * /v2/tax
+
+* Events
+  * /v2/events
+  * /v2/events/{EVENT_ID}
+
+* Logs
+  * /v2/logs
+  * /v2/logs/{LOG_ID}
 
 
 ## Errors
@@ -109,6 +146,10 @@ Our error responses have the format:
         },
         "data": "User with email already exists."
     }
+
+
+
+## Resource Methods
 
 
 ## Products
