@@ -5,34 +5,34 @@
 * [Authentication](#authentication)
 * [Errors](#errors)
 
-Products
+**[Products](#products)**
 * [Create a product](#create-product)
 * [Retrieve a single product](#retrieve-product)
 * [List all products](#list-all-products)
 * [Update a product](#update-product)
 
-Orders
+**[Orders](#orders)**
 * [Create an order](#create-order)
 * [Retrieve a single order](#retrieve-order)
 * [List all orders](#list-all-orders)
 * [Update an order](#update-order)
 
-Payments
+**[Payments](#payments)**
 * [Create a payment](#create-payment)
 * [Retrieve a payment](#retrieve-payment)
 * [List all payments](#list-all-payments)
 * [Capture a payment](#capture-payment)
 * [Refund a payment](#refund-payment)
 
-Shipments
+**[Shipments](#shipments)**
 * [Create a shipment](#create-shipment)
 * [Retrieve a shipment](#retrieve-shipment)
 * [List all shipments](#list-all-shipments)
 
-Taxes
+**[Taxes](#taxes)**
 * [Retrieve sales tax](#retrieve-sales-tax)
 
-ACCOUNT
+**[Account](#Account)**
 * [Retrieve account details](#retrieve-account)
 
 **[Events](#events)**
@@ -469,7 +469,7 @@ __Arguments__
     Optional: since/from, until/to, sort, order
 
 
-## Taxes
+## Tax
 
 ### Retrieve sales tax
 
