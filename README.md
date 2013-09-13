@@ -55,31 +55,6 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 * There are two environments: live and test
 * Currency amounts and costs are in cents
 
-API Endpoints:
-
-* /v2/customers
-* /v2/customers/{CUSTOMER_ID}
-* /v2/orders
-* /v2/orders/{ORDER_ID}
-* /v2/orders/{ORDER_ID}/payments
-* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
-* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
-* /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
-* /v2/orders/{ORDER_ID}/shipments
-* /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
-* /v2/products
-* /v2/products/{PRODUCT_ID}
-* /v2/tax
-* /v2/account
-* /v2/events
-* /v2/events/{EVENT_ID}
-* /v2/logs
-* /v2/logs/{LOG_ID}
-
-Remember to set the HTTP header on all POST/PUT requests:
-
-    "Content-Type: application/json"
-
 
 ## Authentication
 
@@ -94,6 +69,66 @@ All endpoints require authentication. To authenticate with HTTP header, there ar
 Alternatively, you can pass access_token in via query string.  This can be particularly useful in debugging GET requests.  You can simply add "?access_token={access_token}" to any request to authenticate.
 
 
+## Organization
+
+The API is organized by version of the API and resource (/{version}/{resource}). The current version of the API is v2. For example, to reach the products end point, you would access /v2/products. To access a resource with a particular ID the route is /{version}/{resource}/{id}, or /v2/products/52323272fa361e040c000001.
+
+These resources have full CRUD support:
+
+* Products (/v2/products)
+* Orders
+* Customers
+
+These resources have read-only CRUD support:
+
+* Events
+* Logs
+
+Because of the inherent complexity of ecommerce, the API also has a number of child resources (or subcollections). Child resources are accessible via the route "/{version}/{resource}/{resource_id}/{child_resource}" and are related to the parent, and a particular resource can be accessed at "../{child_resource}/{child_resource_id}". 
+
+* Products
+  + Events
+* Orders
+  + Payments (/v2/orders/{order_id}/payments)
+  + Shipments
+  + Events (/v2/orders/{order_id}/events - read-only)
+* Customers
+  + Events
+  + Orders
+* Events
+  + Webhooks (/v2/events/{event_id}/webhooks)
+
+
+## List of Routes
+
+* Customers
+  * /v2/customers
+  * /v2/customers/{CUSTOMER_ID}
+
+* Orders
+  * /v2/orders
+  * /v2/orders/{ORDER_ID}
+  * /v2/orders/{ORDER_ID}/payments
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
+  * /v2/orders/{ORDER_ID}/shipments
+  * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
+
+* Products
+  * /v2/products
+  * /v2/products/{PRODUCT_ID}
+
+* Taxes
+  * /v2/tax
+
+* Events
+  * /v2/events
+  * /v2/events/{EVENT_ID}
+
+* Logs
+  * /v2/logs
+  * /v2/logs/{LOG_ID}
 
 
 ## Products
