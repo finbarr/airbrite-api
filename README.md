@@ -72,7 +72,7 @@ Alternatively, you can authenticate via query string by simply adding `?access_t
 
 ## Organization
 
-The API is organized by version of the API and resource (/{version}/{resource}). The current version of the API is v2. For example, to reach the products end point, you would access /v2/products. To access a resource with a particular ID the route is /{version}/{resource}/{id}, or /v2/products/52323272fa361e040c000001.
+The API is organized by version of the API and resource (/{VERSION}/{RESOURCE}). The current version of the API is v2. For example, to reach the products end point, you would access /v2/products. To access a resource with a particular ID the route is /{VERSION}/{RESOURCE}/{id}, or /v2/products/52323272fa361e040c000001.
 
 These resources have full CRUD support:
 
@@ -85,19 +85,19 @@ These resources have read-only CRUD support:
 * Events
 * Logs
 
-Because of the inherent complexity of ecommerce, the API also has a number of child resources (or subcollections). Child resources are accessible via the route "/{version}/{resource}/{resource_id}/{child_resource}" and are related to the parent, and a particular resource can be accessed at "../{child_resource}/{child_resource_id}". 
+Because of the inherent complexity of ecommerce, the API also has a number of child resources (or subcollections). Child resources are accessible via the route "/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}" and are related to the parent, and a particular resource can be accessed at "../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}". 
 
 * Products
   + Events
 * Orders
-  + Payments (/v2/orders/{order_id}/payments)
+  + Payments (/v2/orders/{ORDER_ID}/payments)
   + Shipments
-  + Events (/v2/orders/{order_id}/events - read-only)
+  + Events (/v2/orders/{ORDER_ID}/events - read-only)
 * Customers
   + Events
   + Orders
 * Events
-  + Webhooks (/v2/events/{event_id}/webhooks)
+  + Webhooks (/v2/events/{EVENT_ID}/webhooks)
 
 
 ## List of Routes
