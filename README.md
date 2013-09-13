@@ -1,6 +1,4 @@
 # Airbrite API
-==============
-
 
 
 ## Quick Intro
