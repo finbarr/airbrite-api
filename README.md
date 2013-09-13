@@ -32,17 +32,18 @@ Shipments
 Taxes
 * [Retrieve sales tax](#retrieve-sales-tax)
 
-Account
+ACCOUNT
 * [Retrieve account details](#retrieve-account)
 
-[Events](#events)
+**[Events](#events)**
 * [Retrieve an event](#retrieve-event)
 * [List all events](#list-all-events)
 * [Types of events](#types-of-events)
 
 ## Introduction
 
-The Airbrite API is an ecommerce logic and storage engine designed to be an essential tool for any developer.  
+The Airbrite API is an ecommerce logic and storage engine designed to be an essential tool for any developer.
+
 Our API is organized around REST and designed to have predictable, resource-oriented URLs, and to use HTTP response codes to indicate API errors. We support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code). JSON will be returned in all responses from the API, including errors.
 
 To make the Airbrite API as explorable as possible, accounts have test API keys as well as live API keys. These keys can be active at the same time. Data created with test credentials will never access live money.
