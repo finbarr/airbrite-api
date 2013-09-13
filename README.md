@@ -61,13 +61,13 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 
 Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used on the client-side and will authenticate for only POST requests to Orders. Secret keys are used by your servers to make requests to the Airbrite API.
 
-All endpoints require authentication. To authenticate with HTTP header, there are 3 methods you can your header, where {ACCESS_TOKEN} is s "sk_test_xxx" or "sk_live_xxx":
+All endpoints require authentication. To authenticate with HTTP header, there are 3 methods you can your header, where {ACCESS_TOKEN} is "sk_test_xxx" or "sk_live_xxx":
 
 * Authorization: {ACCESS_TOKEN}
 * Authorization: Basic {BASE64_ENCODED_ACCESS_TOKEN}
 * Authorization: Bearer {ACCESS_TOKEN}
 
-Alternatively, you can authenticate via query string by simply adding '?access_token={ACCESS_TOKEN}' to any request.
+Alternatively, you can authenticate via query string by simply adding `?access_token={ACCESS_TOKEN}` to any request.
 
 
 ## Organization
