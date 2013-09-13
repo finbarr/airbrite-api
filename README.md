@@ -35,7 +35,7 @@ Taxes
 Account
 * [Retrieve account details](#retrieve-account)
 
-Events
+[Events](#events)
 * [Retrieve an event](#retrieve-event)
 * [List all events](#list-all-events)
 * [Types of events](#types-of-events)
@@ -519,7 +519,7 @@ Events are our way of letting you know about something interesting that has just
 
 Like our other API resources, you can retrieve an individual event or a list of events from the API. We also have a system for sending the events directly to your server, called webhooks. Webhooks are managed in your account settings.
 
-### Retrieve an event
+### Retrieve event
 
 __Endpoint__
 
