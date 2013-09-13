@@ -14,9 +14,9 @@ To get started with the API, it's useful to know some essentials.
 
 * The API's base URL can be found at `https://api.airbrite.io`
 
-* Your access tokens can be found in "My Account" under "API Keys"
+* Your access tokens can be found in "My Account" under "Keys"
 
-* There are two environments - a live environment that uses your live keys, and a test environment that uses your test keys.  Similarly, for a payment provider like Stripe, we will also use the Stripe live or test keys for making calls to their API on your behalf
+* There are two environments - a live environment that uses your live keys and a test environment that uses your test keys.  For a payment provider like Stripe, we will also use the Stripe live or test keys for making calls to their API based on which key is used.
 
 * You can connect to Stripe from "My Account" under "Payments"
 
