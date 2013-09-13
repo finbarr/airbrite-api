@@ -53,9 +53,9 @@ These resources have read-only CRUD support:
 Because of the inherent complexity of ecommerce, the API also has a number of child resources.  Child resources are accessible via the route "/{version}/{resource}/{resource_id}/{child_resource}" and are related to the parent, and a particular resource can be accessed at "../{child_resource}/{child_resource_id}".  
 
 * Orders
-+ Payments (/v2/orders/{order_id}/payments)
-+ Shipments
-+ Events (/v2/orders/{order_id}/events - read-only)
+  + Payments (/v2/orders/{order_id}/payments)
+  + Shipments
+  + Events (/v2/orders/{order_id}/events - read-only)
 
 
 
