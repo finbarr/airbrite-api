@@ -99,14 +99,14 @@ Alternatively, you can authenticate via query string by simply adding `?access_t
 
 Airbrite uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and codes in the 5xx range indicate an error with Airbrite's servers.
 
-Our errors have the format: 
+Our error responses have the format: 
 
     {
         "meta": {
             "code": 400,
             "error_message": "User with email already exists.",
             "error_type": "client_error"
-    },
+        },
         "data": "User with email already exists."
     }
 
@@ -122,7 +122,7 @@ __Endpoint__
 __Arguments__
 
     Required: sku, price
-    Optional: name
+    Optional: name, description, metadata
 
 
 ### Retrieve product
@@ -227,8 +227,8 @@ __Endpoint__
 
 __Arguments__
 
-    Required: customer (email address)
-    Optional: line_items, shipping_address, shipping, tax, discount, payments, shipments, metadata
+    Required: none
+    Optional: line_items, shipping_address, shipping, tax, discount, payments, shipments, description, metadata
 
 __Body__
 
