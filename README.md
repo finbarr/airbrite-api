@@ -20,6 +20,9 @@ To get started with the API, it's useful to know some essentials.
 
 * You can connect to Stripe from "My Account" under "Payments"
 
+* Everything is JSON
+  * It is highly recommended that you pass in JSON formatted data
+  * All data we send back will be in the JSON format
 
 
 
@@ -28,7 +31,7 @@ To get started with the API, it's useful to know some essentials.
 Tokens are used for authenticating your requests. There are two sets of two tokens for each environment - live and test, public and secret. Live tokens will access your live data and use your live keys against other APIs. Test tokens will use your test data. Public keys are OK to use client-side in your javascript code and will authenticate for only POST requests to orders (and other limited calls) while the secret keys are what your servers should be using to make requests.  
 All endpoints require authentication, which have two methods of authentication.
 
-* The recommended method is to pass in the HTTP header field "Authorization" with the value "{access_token}", where token is "sk_test_xxx..." or "sk_live_xxx". Also accepted are "Authorization: Basic {base_64_encoded_token}" and "Authorization: Bearer {access_token}".
+* The recommended method is to pass in the HTTP header field "Authorization" with the value "{access_token}", where token is "sk_test_xxx..." or "sk_live_xxx...". Also accepted are "Authorization: Basic {base_64_encoded_token}" and "Authorization: Bearer {access_token}".
 
 * Another method is to pass access_token in via query string. This can be particularly useful in debugging GET requests. You can simply add "?access_token={access_token}" to any request to authenticate.
 
@@ -71,6 +74,14 @@ Because of the inherent complexity of ecommerce, the API also has a number of ch
   + Orders
 * Events
   + Webhooks (/v2/events/{event_id}/webhooks)
+
+
+
+
+
+
+
+
 
 
 
