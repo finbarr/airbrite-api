@@ -5,7 +5,6 @@
 * [Authentication](#authentication)
 * [Organization](#organization)
 * [Response Format](#response-format)
-* [Collection Pagination](#collection-pagination)
 * [Errors](#errors)
 * [Resource Methods](#resource-methods)
 
@@ -57,7 +56,7 @@ The Airbrite API is an ecommerce logic and storage engine designed to be an esse
 
 Our API is organized around REST and designed to have predictable, resource-oriented URLs, and to use HTTP response codes to indicate API errors. We support [cross-origin resource sharing](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing) to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code). JSON will be returned in all responses from the API, including errors.
 
-To make the Airbrite API as explorable as possible, accounts have test API keys as well as live API keys. These keys can be active at the same time. Data created with test credentials will never access live money.
+To make the Airbrite API as explorable as possible, accounts have test API keys as well as live API keys. These keys can be active at the same time. Data created with test credentials do not access live money.
 
 
 ## Getting Started
@@ -66,14 +65,13 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 * All requests must be made over SSL
 * To create new orders, you should setup your product/SKU first
 * To process payments, you must connect to Stripe, which can be done in your account settings
-* Currency amounts and costs are in cents
 
 
 ## Authentication
 
 Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used only on the client-side and will authenticate for only POST requests for Orders. Secret keys are used by your servers to make requests to the Airbrite API.
 
-All endpoints require authentication. To authenticate with HTTP header, there are 3 methods you can your header, where {ACCESS_TOKEN} is "sk_test_xxx" or "sk_live_xxx":
+All endpoints require authentication. To authenticate with HTTP header, there are 3 ways you can set your header, where {ACCESS_TOKEN} is `sk_test_xxxxxx` or `sk_live_xxxxxx`:
 
 * Authorization: {ACCESS_TOKEN}
 * Authorization: Basic {BASE64_ENCODED_ACCESS_TOKEN}
@@ -113,7 +111,7 @@ The API also has a number of child resources (or subcollections). Child resource
 
 ## Response Format
 
-All responses return with a similar structure.  Here's an example:
+All responses return with a similar structure. Collections returns an array and single objects return an object. Here's an example:
 
 __Response__
 
@@ -129,26 +127,22 @@ __Response__
         "limit": 1,
         "has_more": true
       },
-      "data": [             // collection returns an array, single objects return an object
+      "data": [
         {
           "user_id": "522a72380ac3590000000001",
-          "_id": "522e4eeccf84bd0000000007",            // ID for specific object
+          "_id": "522e4eeccf84bd0000000007",
           "name": "Awesome Product",                    
           "sku": "awesome",
           "price": 1000,
-          "created": 1378766572,                        // Created when object is created
-          "created_date": "2013-09-09T22:42:52.781Z",   // Created when object is created
-          "updated": 1378766572,                        // Updated when object is changed
-          "updated_date": "2013-09-09T22:42:52.781Z",   // Updated when object is changed
+          "created": 1378766572,
+          "created_date": "2013-09-09T22:42:52.781Z",
+          "updated": 1378766572,
+          "updated_date": "2013-09-09T22:42:52.781Z",
           "description": null,
-          "metadata": null                              // Metadata can be anything you want to pass in
+          "metadata": null
         }
       ]
     }
-
-    
-
-## Collections
 
 All collections accept pagination parameters and filters will respond with paging information about the collection. These are read from the passed in query string and can be mixed and matched as necessary.
 
@@ -642,6 +636,25 @@ __Arguments__
 
 
 ## Customers
+
+__Arguments__
+
+    _id:              string
+    user_id:          string
+    created:          timestamp (Unix)
+    created_date:     timestamp (ISO_8601)
+    updated:          timestamp (Unix)
+    updated_date:     timestamp (ISO_8601)
+    name:             string
+    email:            string
+    addresses:        array
+    default_address:  object
+                      Contains name, line1, line2, city, state, zip, country, phone
+    card_token:       string
+    stripe:           object
+    description:      string
+    metadata:         object
+
 
 ### Create customer
 
