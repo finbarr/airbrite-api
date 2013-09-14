@@ -253,6 +253,9 @@ __Arguments__
     Optional: name, description, metadata
 
 
+-------
+
+
 ### Retrieve product
 
 __Endpoint__
@@ -265,6 +268,9 @@ __Arguments__
     Optional: none
 
 
+-------
+
+
 ### List all products
 
 __Endpoint__
@@ -275,6 +281,9 @@ __Arguments__
 
     Required: none
     Optional: limit, skip, sort, order, since, until
+
+
+-------
 
 
 ### Update product
