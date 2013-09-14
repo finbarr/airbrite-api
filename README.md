@@ -90,50 +90,57 @@ These resources have read-only CRUD support:
 Because of the inherent complexity of ecommerce, the API also has a number of child resources (or subcollections). Child resources are accessible via the route "/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}" and are related to the parent, and a particular resource can be accessed at "../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}". 
 
 * Products
-  + Events
+    + Events
 * Orders
-  + Payments (/v2/orders/{ORDER_ID}/payments)
-  + Shipments
-  + Events (/v2/orders/{ORDER_ID}/events - read-only)
+    + Payments (/v2/orders/{ORDER_ID}/payments)
+    + Shipments
+    + Events (/v2/orders/{ORDER_ID}/events - read-only)
 * Customers
-  + Events
-  + Orders
+    + Events
+    + Orders
 * Events
-  + Webhooks (/v2/events/{EVENT_ID}/webhooks)
+    + Webhooks (/v2/events/{EVENT_ID}/webhooks)
 
 
-## List of Routes
+## Response Format
 
-* Customers
-  * /v2/customers
-  * /v2/customers/{CUSTOMER_ID}
+All responses return with a similar structure.  Here's an example:
 
-* Orders
-  * /v2/orders
-  * /v2/orders/{ORDER_ID}
-  * /v2/orders/{ORDER_ID}/payments
-  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
-  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
-  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
-  * /v2/orders/{ORDER_ID}/shipments
-  * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
+__Response__
 
-* Products
-  * /v2/products
-  * /v2/products/{PRODUCT_ID}
+    {
+      "meta": {             // meta 
+        "code": 200,        // code: 200 means success.  Read more about [error codes](#errors)
+        "env": "test"       // env: returned env
+      },
+      "paging": {           // See [pagination](#collection-pagination-and-response-format)
+        "total": 7,
+        "count": 1,
+        "offset": 5,
+        "limit": 1,
+        "has_more": true
+      },
+      "data": [             // data for collections will be an array, while data for a specified resource will be an object
+        {
+          "user_id": "522a72380ac3590000000001",        // This is your user_id
+          "_id": "522e4eeccf84bd0000000007",            // ID for specific object
+          "team_id": "522a72670ac3590000000005",        // The team_id for your team
+          "name": "Awesome Product",                    
+          "sku": "awesome",
+          "price": 1000,
+          "created": 1378766572,                        // Created when object is created
+          "created_date": "2013-09-09T22:42:52.781Z",   // Created when object is created
+          "updated": 1378766572,                        // Updated when object is changed
+          "updated_date": "2013-09-09T22:42:52.781Z",   // Updated when object is changed
+          "weight": null,
+          "inventory": null,
+          "description": null,
+          "metadata": null                              // Metadata can be anything you want to pass in
+        }
+      ]
+    }
 
-* Taxes
-  * /v2/tax
-
-* Events
-  * /v2/events
-  * /v2/events/{EVENT_ID}
-
-* Logs
-  * /v2/logs
-  * /v2/logs/{LOG_ID}
-
-
+    
 
 ## Collection Pagination and Response Format
 
@@ -161,17 +168,17 @@ __Params__
 __Response__
 
     { 
-      ...,
-      "paging": {
-        "total": 45,
-        "count": 10,
-        "offset": 5,
-        "limit": 10,
-        "has_more": 
-      }
-      "data": {
-        ...  
-      }
+        ...,
+        "paging": {
+            "total": 45,
+            "count": 10,
+            "offset": 5,
+            "limit": 10,
+            "has_more": 
+        }
+        "data": {
+          ...  
+        }
     }
 
 
@@ -193,6 +200,38 @@ Our error responses have the format:
 
 
 ## Resource Methods
+
+### List of Routes
+
+* Products
+  * /v2/products
+  * /v2/products/{PRODUCT_ID}
+
+* Orders
+  * /v2/orders
+  * /v2/orders/{ORDER_ID}
+  * /v2/orders/{ORDER_ID}/payments
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
+  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
+  * /v2/orders/{ORDER_ID}/shipments
+  * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
+
+
+* Customers
+  * /v2/customers
+  * /v2/customers/{CUSTOMER_ID}
+
+* Taxes
+  * /v2/tax
+
+* Events
+  * /v2/events
+  * /v2/events/{EVENT_ID}
+
+* Logs
+  * /v2/logs
+  * /v2/logs/{LOG_ID}
 
 
 ### Products
