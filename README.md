@@ -45,9 +45,9 @@
 * [Retrieve account details](#retrieve-account)
 
 **[Events](#events)**
-* [Retrieve an event](#retrieve-event)
-* [List all events](#list-all-events)
-* [Types of events](#types-of-events)
+    * [Retrieve an event](#retrieve-event)
+    * [List all events](#list-all-events)
+    * [Types of events](#types-of-events)
 
 
 ## Introduction
@@ -63,7 +63,7 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 
 * The base endpoint URL is: `https://api.airbrite.io`
 * All requests must be made over SSL
-* To create new orders, you should setup your product/SKU first
+* To create new orders, you should setup your product first
 * To process payments, you must connect to Stripe, which can be done in your account settings
 
 
@@ -71,11 +71,11 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 
 Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used only on the client-side and will authenticate for only POST requests for Orders. Secret keys are used by your servers to make requests to the Airbrite API.
 
-All endpoints require authentication. To authenticate with HTTP header, there are 3 ways you can set your header, where {ACCESS_TOKEN} is `sk_test_xxxxxx` or `sk_live_xxxxxx`:
+All endpoints require authentication. To authenticate with HTTP header, there are 3 ways you can set your header, where {ACCESS_TOKEN} is `sk_test_xxxxxx` or `sk_live_xxxxxx`.
 
-* Authorization: {ACCESS_TOKEN}
-* Authorization: Basic {BASE64_ENCODED_ACCESS_TOKEN}
-* Authorization: Bearer {ACCESS_TOKEN}
+1. Authorization: {ACCESS_TOKEN}
+2. Authorization: Basic {BASE64_ENCODED_ACCESS_TOKEN}
+3. Authorization: Bearer {ACCESS_TOKEN}
 
 Alternatively, you can authenticate via query string by simply adding `?access_token={ACCESS_TOKEN}` to any request.
 
@@ -94,7 +94,9 @@ These resources have read-only CRUD support:
 
 * Events
 
-The API also has a number of child resources (or subcollections). Child resources are accessible via the route `/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}` and are related to the parent, and a particular resource can be accessed at `../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}`. 
+The API also has a number of child resources (or subcollections). Child resources are accessible via the route `/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}`. A specific resource can be accessed at `../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}`. 
+
+Below are the parent and child resources.
 
 * Products
     + Events
