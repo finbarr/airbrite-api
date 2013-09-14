@@ -41,13 +41,13 @@
 **[Taxes](#taxes)**
 * [Retrieve sales tax](#retrieve-sales-tax)
 
-**[Account](#Account)**
+**[Account](#account)**
 * [Retrieve account details](#retrieve-account)
 
 **[Events](#events)**
-    * [Retrieve an event](#retrieve-event)
-    * [List all events](#list-all-events)
-    * [Types of events](#types-of-events)
+* [Retrieve an event](#retrieve-event)
+* [List all events](#list-all-events)
+* [Types of events](#types-of-events)
 
 
 ## Introduction
@@ -96,7 +96,7 @@ These resources have read-only CRUD support:
 
 The API also has a number of child resources (or subcollections). Child resources are accessible via the route `/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}`. A specific resource can be accessed at `../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}`. 
 
-Below are the parent and child resources.
+Below are the parent and their respective child resources.
 
 * Products
     + Events
@@ -105,8 +105,9 @@ Below are the parent and child resources.
     + Shipments
     + Events
 * Customers
-    + Events
     + Orders
+    + Events
+* Account
 * Events
     + Webhooks
 
@@ -206,30 +207,30 @@ Our error responses have the format:
 ### List of Routes
 
 * Products
-  * /v2/products
-  * /v2/products/{PRODUCT_ID}
+    * /v2/products
+    * /v2/products/{PRODUCT_ID}
 
 * Orders
-  * /v2/orders
-  * /v2/orders/{ORDER_ID}
-  * /v2/orders/{ORDER_ID}/payments
-  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
-  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
-  * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
-  * /v2/orders/{ORDER_ID}/shipments
-  * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
+    * /v2/orders
+    * /v2/orders/{ORDER_ID}
+    * /v2/orders/{ORDER_ID}/payments
+    * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
+    * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
+    * /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
+    * /v2/orders/{ORDER_ID}/shipments
+    * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
 
 * Customers
-  * /v2/customers
-  * /v2/customers/{CUSTOMER_ID}
+    * /v2/customers
+    * /v2/customers/{CUSTOMER_ID}
 
 * Taxes
-  * /v2/tax
+    * /v2/tax
 
 * Events
-  * /v2/events
-  * /v2/events/{EVENT_ID}
-  * /v2/events/{EVENT_ID}/webhooks
+    * /v2/events
+    * /v2/events/{EVENT_ID}
+    * /v2/events/{EVENT_ID}/webhooks
 
 
 ## Products
@@ -249,6 +250,7 @@ __Arguments__
                   Amount in cents
     description:  string
     metadata:     object
+                  Store as many key-value pairs of extra data as you wish
 
 
 ### Create product
@@ -299,8 +301,6 @@ __Arguments__
     Optional: none
 
 
-
-
 ## Orders
 
 __Arguments__
@@ -327,9 +327,11 @@ __Arguments__
                       Contains cost (integer)
     customer:         object
     payments:         array
+                      Contains gateway, amount, charge_token
     shipments:        array
     description:      string
     metadata:         object
+                      Store as many key-value pairs of extra data as you wish
 
 
 ### Create Order
@@ -493,7 +495,7 @@ __Endpoint__
 __Arguments__
 
     Required: order_id
-    Optional: line_items, shipping_address, shipping, tax, discount, status, 9description, metadata
+    Optional: line_items, shipping_address, shipping, tax, discount, status, description, metadata
 
 
 ## Payments
@@ -524,6 +526,7 @@ __Arguments__
     billing_address:      object
     description:          string
     metadata:             object
+                          Store as many key-value pairs of extra data as you wish
 
 
 ### Create payment
@@ -656,6 +659,7 @@ __Arguments__
     stripe:           object
     description:      string
     metadata:         object
+                      Store as many key-value pairs of extra data as you wish
 
 
 ### Create customer
