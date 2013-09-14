@@ -7,11 +7,11 @@
 * [Response Format](#response-format)
 * [Errors](#errors)
 * [Resource Methods](#resource-methods)
-    *[Products](#products)*
-        * [Create a product](#create-product)
-        * [Retrieve a single product](#retrieve-product)
-        * [List all products](#list-all-products)
-        * [Update a product](#update-product)
+    + [Products](#products)*
+        + [Create a product](#create-product)
+        + [Retrieve a single product](#retrieve-product)
+        + [List all products](#list-all-products)
+        + [Update a product](#update-product)
 
 **[Orders](#orders)**
 * [Create an order](#create-order)
