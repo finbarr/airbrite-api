@@ -773,6 +773,8 @@ __Arguments__
 
 ## Tax
 
+To calculate sales tax, you should add your business' zip codes in your account settings. Otherwise, you must specify them as part of the request.
+
 ### Retrieve sales tax
 
 __Endpoint__
@@ -781,8 +783,8 @@ __Endpoint__
 
 __Arguments__
 
-    Required: zip, nexus_zips (comma separated)
-    Optional: amount
+    Required: zip
+    Optional: amount, nexus_zips (comma separated)
 
 __Body__
 
