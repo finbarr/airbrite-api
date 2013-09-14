@@ -52,6 +52,7 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 
 * The base endpoint URL is: `https://api.airbrite.io`
 * Your access tokens can be found in "My Account"
+* SSL only: we require that all requests are done over SSL
 * To process payments, you must connect to Stripe, which can be done in "My Account"
 * There are two environments: live and test
 * Currency amounts and costs are in cents
@@ -132,6 +133,47 @@ Because of the inherent complexity of ecommerce, the API also has a number of ch
   * /v2/logs/{LOG_ID}
 
 
+
+## Collection Pagination and Response Format
+
+All collections accept pagination parameters and filters will respond with paging information about the collection. These are read from the passed in query string and can be mixed and matched as necessary.
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/products?limit=10&skip=5&sort=sku&order=asc
+
+__Params__
+
+    limit: optional
+            Maximum number of objects to return.  Defaults to 100.
+    skip:  optional
+            Number of objects to skip over before returning results
+    sort:  optional
+            Which field to sort by
+    order: optional
+            Which way to sort (1 or -1 and asc or desc are the same, respectively)
+    since: optional
+            Matches all items updated after unix timestamp
+    until: optional
+            Matches all items updated before unix timestamp
+
+__Response__
+
+    { 
+      ...,
+      "paging": {
+        "total": 45,
+        "count": 10,
+        "offset": 5,
+        "limit": 10,
+        "has_more": 
+      }
+      "data": {
+        ...  
+      }
+    }
+
+
 ## Errors
 
 Airbrite uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and codes in the 5xx range indicate an error with Airbrite's servers.
@@ -152,9 +194,21 @@ Our errors have the format:
 ## Resource Methods
 
 
-## Products
+### Products
 
-### Create product
+#### List all products
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/products
+
+__Arguments__
+
+    Required: none
+    Optional: since/from, until/to, sort, order
+
+
+#### Create product
 
 __Endpoint__
 
@@ -177,17 +231,6 @@ __Arguments__
     Required: product_id
     Optional: none
 
-
-### List all products
-
-__Endpoint__
-
-    GET https://api.airbrite.io/v2/products
-
-__Arguments__
-
-    Required: none
-    Optional: since/from, until/to, sort, order
 
 
 ### Update product
