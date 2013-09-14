@@ -32,7 +32,7 @@
         + [Retrieve a single customer](#retrieve-customer)
         + [List all customers](#list-all-customers)
         + [Update a customer](#update-customer)
-    + [Taxes](#taxes)
+    + [Tax](#tax)
         + [Retrieve sales tax](#retrieve-sales-tax)
     + [Account](#account)
         + [Retrieve account details](#retrieve-account)
