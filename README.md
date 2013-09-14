@@ -113,17 +113,17 @@ __Response__
 
     {
       "meta": {             // meta 
-        "code": 200,        // code: 200 means success.  Read more about [error codes](#errors)
-        "env": "test"       // env: returned env
+        "code": 200,        // success
+        "env": "test"
       },
-      "paging": {           // See [pagination](#collection-pagination-and-response-format)
+      "paging": {
         "total": 7,
         "count": 1,
         "offset": 5,
         "limit": 1,
         "has_more": true
       },
-      "data": [             // data for collections will be an array, while data for a specified resource will be an object
+      "data": [             // collection returns an array, single objects return an object
         {
           "user_id": "522a72380ac3590000000001",        // This is your user_id
           "_id": "522e4eeccf84bd0000000007",            // ID for specific object
