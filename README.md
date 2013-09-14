@@ -5,44 +5,45 @@
 * [Authentication](#authentication)
 * [Errors](#errors)
 
-Products
+**[Products](#products)**
 * [Create a product](#create-product)
 * [Retrieve a single product](#retrieve-product)
 * [List all products](#list-all-products)
 * [Update a product](#update-product)
 
-Orders
+**[Orders](#orders)**
 * [Create an order](#create-order)
 * [Retrieve a single order](#retrieve-order)
 * [List all orders](#list-all-orders)
 * [Update an order](#update-order)
 
-Payments
+**[Payments](#payments)**
 * [Create a payment](#create-payment)
 * [Retrieve a payment](#retrieve-payment)
 * [List all payments](#list-all-payments)
 * [Capture a payment](#capture-payment)
 * [Refund a payment](#refund-payment)
 
-Shipments
+**[Shipments](#shipments)**
 * [Create a shipment](#create-shipment)
 * [Retrieve a shipment](#retrieve-shipment)
 * [List all shipments](#list-all-shipments)
 
-Taxes
+**[Taxes](#taxes)**
 * [Retrieve sales tax](#retrieve-sales-tax)
 
-Account
+**[Account](#Account)**
 * [Retrieve account details](#retrieve-account)
 
-Events
+**[Events](#events)**
 * [Retrieve an event](#retrieve-event)
 * [List all events](#list-all-events)
 * [Types of events](#types-of-events)
 
 ## Introduction
 
-The Airbrite API is an ecommerce logic and storage engine designed to be an essential tool for any developer.  
+The Airbrite API is an ecommerce logic and storage engine designed to be an essential tool for any developer.
+
 Our API is organized around REST and designed to have predictable, resource-oriented URLs, and to use HTTP response codes to indicate API errors. We support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code). JSON will be returned in all responses from the API, including errors.
 
 To make the Airbrite API as explorable as possible, accounts have test API keys as well as live API keys. These keys can be active at the same time. Data created with test credentials will never access live money.
@@ -51,16 +52,16 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 ## Getting Started
 
 * The base endpoint URL is: `https://api.airbrite.io`
-* Your access tokens can be found in "My Account"
-* SSL only: we require that all requests are done over SSL
-* To process payments, you must connect to Stripe, which can be done in "My Account"
+* Your access tokens can be found in your account settings
+* We require that all requests are done over SSL
+* To process payments, you must connect to Stripe, which can be done in your account settings
 * There are two environments: live and test
 * Currency amounts and costs are in cents
 
 
 ## Authentication
 
-Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used on the client-side and will authenticate for only POST requests to Orders. Secret keys are used by your servers to make requests to the Airbrite API.
+Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used only on the client-side and will authenticate for only POST requests to Orders. Secret keys are used by your servers to make requests to the Airbrite API.
 
 All endpoints require authentication. To authenticate with HTTP header, there are 3 methods you can your header, where {ACCESS_TOKEN} is "sk_test_xxx" or "sk_live_xxx":
 
@@ -73,7 +74,7 @@ Alternatively, you can authenticate via query string by simply adding `?access_t
 
 ## Organization
 
-The API is organized by version of the API and resource (/{VERSION}/{RESOURCE}). The current version of the API is v2. For example, to reach the products end point, you would access /v2/products. To access a resource with a particular ID the route is /{VERSION}/{RESOURCE}/{id}, or /v2/products/52323272fa361e040c000001.
+The API is organized by version of the API and resource: `/{VERSION}/{RESOURCE}`. The current version of the API is `v2`. For example, to reach the Products endpoint, you would access `/v2/products`. To access a resource with a specific ID, the route is `/{VERSION}/{RESOURCE}/{id}`, or `/v2/products/52323272fa361e040c000001`.
 
 These resources have full CRUD support:
 
@@ -178,14 +179,14 @@ __Response__
 
 Airbrite uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and codes in the 5xx range indicate an error with Airbrite's servers.
 
-Our errors have the format: 
+Our error responses have the format: 
 
     {
         "meta": {
             "code": 400,
             "error_message": "User with email already exists.",
             "error_type": "client_error"
-    },
+        },
         "data": "User with email already exists."
     }
 
@@ -204,8 +205,9 @@ __Endpoint__
 
 __Arguments__
 
-    Required: none
-    Optional: since/from, until/to, sort, order
+    Required: sku, price
+    Optional: name, description, metadata
+
 
 
 #### Create product
@@ -311,8 +313,8 @@ __Endpoint__
 
 __Arguments__
 
-    Required: customer (email address)
-    Optional: line_items, shipping_address, shipping, tax, discount, payments, shipments, metadata
+    Required: none
+    Optional: line_items, shipping_address, shipping, tax, discount, payments, shipments, description, metadata
 
 __Body__
 
@@ -511,7 +513,7 @@ __Arguments__
     Optional: since/from, until/to, sort, order
 
 
-## Taxes
+## Tax
 
 ### Retrieve sales tax
 
@@ -558,7 +560,11 @@ __Arguments__
 
 ## Events
 
-### Retrieve an event
+Events are our way of letting you know about something interesting that has just happened in your account. When an interesting event occurs, we create a new event object. For example, when a payment is successfully charged, we create a order.payment.succeeded event. Note that many API requests may cause multiple events to be created.
+
+Like our other API resources, you can retrieve an individual event or a list of events from the API. We also have a system for sending the events directly to your server, called webhooks. Webhooks are managed in your account settings.
+
+### Retrieve event
 
 __Endpoint__
 
@@ -590,9 +596,13 @@ You'll notice that these events follow a pattern: resource.event. Our goal is to
 
 __Events__
 
+* customer.created
+* customer.updated
 * order.created
 * order.updated
 * order.payment.succeeded
 * order.payment.authorized
 * order.payment.captured
 * order.payment.refunded
+* product.created
+* product.updated
