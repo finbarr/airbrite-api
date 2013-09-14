@@ -78,32 +78,31 @@ Alternatively, you can authenticate via query string by simply adding `?access_t
 
 ## Organization
 
-The API is organized by version of the API and resource: `/{VERSION}/{RESOURCE}`. The current version of the API is `v2`. For example, to reach the Products endpoint, you would access `/v2/products`. To access a resource with a specific ID, the route is `/{VERSION}/{RESOURCE}/{ID}`, or `/v2/products/52323272fa361e040c000001`.
+The API is organized by version of the API and resource: `/{VERSION}/{RESOURCE}`. The current version of the API is `v2`. For example, to reach the Products endpoint, you would access `/v2/products`. To access a resource with a specific ID, the route is `/{VERSION}/{RESOURCE}/{ID}`.
 
 These resources have full [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) support:
 
-* Products `/v2/products`
+* Products
 * Orders
 * Customers
 
 These resources have read-only CRUD support:
 
 * Events
-* Logs
 
-Because of the inherent complexity of ecommerce, the API also has a number of child resources (or subcollections). Child resources are accessible via the route `/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}` and are related to the parent, and a particular resource can be accessed at `../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}`. 
+The API also has a number of child resources (or subcollections). Child resources are accessible via the route `/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}` and are related to the parent, and a particular resource can be accessed at `../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}`. 
 
 * Products
     + Events
 * Orders
-    + Payments `/v2/orders/{ORDER_ID}/payments`
+    + Payments
     + Shipments
-    + Events `/v2/orders/{ORDER_ID}/events`
+    + Events
 * Customers
     + Events
     + Orders
 * Events
-    + Webhooks `/v2/events/{EVENT_ID}/webhooks`
+    + Webhooks
 
 
 ## Response Format
@@ -175,7 +174,7 @@ __Response__
             "count": 10,
             "offset": 5,
             "limit": 10,
-            "has_more": 
+            "has_more": true
         }
         "data": {
           ...  
@@ -228,28 +227,25 @@ Our error responses have the format:
 * Events
   * /v2/events
   * /v2/events/{EVENT_ID}
-
-* Logs
-  * /v2/logs
-  * /v2/logs/{LOG_ID}
+  * /v2/events/{EVENT_ID}/webhooks
 
 
 ## Products
 
 __Arguments__
 
-    _id:          string
-    user_id:      string
-    created:      timestamp (Unix)
-    created_date: timestamp (ISO_8601)
-    updated:      timestamp (Unix)
-    updated_date: timestamp (ISO_8601)
-    sku:          string
-    name:         string
-    price:        positive integer or zero
-                  Amount in cents
-    description:  string
-    metadata:     object
+    _id:          **string**
+    user_id:      **string**
+    created:      **timestamp (Unix)**
+    created_date: **timestamp (ISO_8601)**
+    updated:      **timestamp (Unix)**
+    updated_date: **timestamp (ISO_8601)**
+    sku:          **string**
+    name:         **string**
+    price:        **positive integer or zero**
+                  *Amount in cents*
+    description:  **string**
+    metadata:     **object**
 
 
 ### Create product
@@ -494,9 +490,37 @@ __Arguments__
 
 ## Payments
 
+__Arguments__
+
+    _id:                  string
+    user_id:              string
+    order_id:             string
+    created:              timestamp (Unix)
+    created_date:         timestamp (ISO_8601)
+    updated:              timestamp (Unix)
+    updated_date:         timestamp (ISO_8601)
+    currency:             string (3-letter ISO currency code)
+    gateway:              string
+    charge_token:         string
+    amount:               integer
+    customer_token:       string
+    customer_card_token:  string
+    capture:              string
+    paid:                 boolean
+    refunded:             boolean
+    captured:             boolean
+    charge_created:       timestamp (Unix)
+    processed:            boolean
+    card:                 object
+                          Contains last4, type, exp_month, exp_year
+    billing_address:      object
+    description:          string
+    metadata:             object
+
+
 ### Create payment
 
-If you're creating a new charge, pass in the card_token.
+1) If you're creating a new charge, pass in the card_token.
 
 __Endpoint__
 
@@ -507,7 +531,7 @@ __Arguments__
     Required: order_id, gateway, currency, amount, card_token
     Optional: capture, metadata
 
-If you're adding an existing charge, pass in the charge_token.
+2) If you're adding an existing charge, pass in the charge_token.
 
 __Endpoint__
 
@@ -655,6 +679,7 @@ __Arguments__
 Events are our way of letting you know about something interesting that has just happened in your account. When an interesting event occurs, we create a new event object. For example, when a payment is successfully charged, we create a order.payment.succeeded event. Note that many API requests may cause multiple events to be created.
 
 Like our other API resources, you can retrieve an individual event or a list of events from the API. We also have a system for sending the events directly to your server, called webhooks. Webhooks are managed in your account settings.
+
 
 ### Retrieve event
 
