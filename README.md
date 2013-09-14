@@ -209,7 +209,6 @@ Our error responses have the format:
 * Products
     + /v2/products
     + /v2/products/{PRODUCT_ID}
-
 * Orders
     + /v2/orders
     + /v2/orders/{ORDER_ID}
@@ -219,14 +218,11 @@ Our error responses have the format:
     + /v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
     + /v2/orders/{ORDER_ID}/shipments
     + /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
-
 * Customers
     + /v2/customers
     + /v2/customers/{CUSTOMER_ID}
-
 * Taxes
     + /v2/tax
-
 * Events
     + /v2/events
     + /v2/events/{EVENT_ID}
