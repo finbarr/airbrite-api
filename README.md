@@ -7,46 +7,39 @@
 * [Response Format](#response-format)
 * [Errors](#errors)
 * [Resource Methods](#resource-methods)
-    + [Products](#products)*
+    + [Products](#products)
         + [Create a product](#create-product)
         + [Retrieve a single product](#retrieve-product)
         + [List all products](#list-all-products)
         + [Update a product](#update-product)
-
-**[Orders](#orders)**
-* [Create an order](#create-order)
-* [Retrieve a single order](#retrieve-order)
-* [List all orders](#list-all-orders)
-* [Update an order](#update-order)
-
-**[Payments](#payments)**
-* [Create a payment](#create-payment)
-* [Retrieve a payment](#retrieve-payment)
-* [List all payments](#list-all-payments)
-* [Capture a payment](#capture-payment)
-* [Refund a payment](#refund-payment)
-
-**[Shipments](#shipments)**
-* [Create a shipment](#create-shipment)
-* [Retrieve a shipment](#retrieve-shipment)
-* [List all shipments](#list-all-shipments)
-
-**[Customers](#customers)**
-* [Create a customer](#create-customer)
-* [Retrieve a single customer](#retrieve-customer)
-* [List all customers](#list-all-customers)
-* [Update a customer](#update-customer)
-
-**[Taxes](#taxes)**
-* [Retrieve sales tax](#retrieve-sales-tax)
-
-**[Account](#account)**
-* [Retrieve account details](#retrieve-account)
-
-**[Events](#events)**
-* [Retrieve an event](#retrieve-event)
-* [List all events](#list-all-events)
-* [Types of events](#types-of-events)
+    + [Orders](#orders)
+        + [Create an order](#create-order)
+        + [Retrieve a single order](#retrieve-order)
+        + [List all orders](#list-all-orders)
+        + [Update an order](#update-order)
+    + [Payments](#payments)
+        + [Create a payment](#create-payment)
+        + [Retrieve a payment](#retrieve-payment)
+        + [List all payments](#list-all-payments)
+        + [Capture a payment](#capture-payment)
+        + [Refund a payment](#refund-payment)
+    + [Shipments](#shipments)
+        + [Create a shipment](#create-shipment)
+        + [Retrieve a shipment](#retrieve-shipment)
+        + [List all shipments](#list-all-shipments)
+    + [Customers](#customers)
+        + [Create a customer](#create-customer)
+        + [Retrieve a single customer](#retrieve-customer)
+        + [List all customers](#list-all-customers)
+        + [Update a customer](#update-customer)
+    + [Taxes](#taxes)
+        + [Retrieve sales tax](#retrieve-sales-tax)
+    + [Account](#account)
+        + [Retrieve account details](#retrieve-account)
+    + [Events](#events)
+        + [Retrieve an event](#retrieve-event)
+        + [List all events](#list-all-events)
+        + [Types of events](#types-of-events)
 
 
 ## Introduction
