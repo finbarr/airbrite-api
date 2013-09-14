@@ -33,6 +33,12 @@
 * [Retrieve a shipment](#retrieve-shipment)
 * [List all shipments](#list-all-shipments)
 
+**[Customers](#customers)**
+* [Create a customer](#create-customer)
+* [Retrieve a single customer](#retrieve-customer)
+* [List all customers](#list-all-customers)
+* [Update a customer](#update-customer)
+
 **[Taxes](#taxes)**
 * [Retrieve sales tax](#retrieve-sales-tax)
 
@@ -234,18 +240,19 @@ Our error responses have the format:
 
 __Arguments__
 
-    _id:          **string**
-    user_id:      **string**
-    created:      **timestamp (Unix)**
-    created_date: **timestamp (ISO_8601)**
-    updated:      **timestamp (Unix)**
-    updated_date: **timestamp (ISO_8601)**
-    sku:          **string**
-    name:         **string**
-    price:        **positive integer or zero**
-                  *Amount in cents*
-    description:  **string**
-    metadata:     **object**
+    _id:          string
+    user_id:      string
+    created:      timestamp (Unix)
+    created_date: timestamp (ISO_8601)
+    updated:      timestamp (Unix)
+    updated_date: timestamp (ISO_8601)
+    sku:          string
+                  Unique identifier for your product
+    name:         string
+    price:        positive integer or zero
+                  Amount in cents
+    description:  string
+    metadata:     object
 
 
 ### Create product
@@ -308,15 +315,20 @@ __Arguments__
     created_date:     timestamp (ISO_8601)
     updated:          timestamp (Unix)
     updated_date:     timestamp (ISO_8601)
-    currency:         string (3-letter ISO currency code)
+    currency:         string
+                      3-letter ISO currency code
     customer_id:      string
     discount:         object
     line_items:       array
     order_number:     integer
+                      Automatically designated by Airbrite
     shipping:         object
+                      Contains cost (integer)
     shipping_address: object
+                      Contains name, line1, line2, city, state, zip, country, phone
     status:           string
     tax:              object
+                      Contains cost (integer)
     customer:         object
     payments:         array
     shipments:        array
@@ -627,6 +639,56 @@ __Arguments__
 
     Required: order_id
     Optional: limit, skip, sort, order, since, until
+
+
+## Customers
+
+### Create customer
+
+__Endpoint__
+
+    POST https://api.airbrite.io/v2/customers
+
+__Arguments__
+
+    Required: 
+    Optional: 
+
+
+### Retrieve customer
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/customers/{CUSTOMER_ID}
+
+__Arguments__
+
+    Required: customer_id
+    Optional: none
+
+
+### List all customers
+
+__Endpoint__
+
+GET https://api.airbrite.io/v2/customers
+
+__Arguments__
+
+    Required: none
+    Optional: limit, skip, sort, order, since, until
+
+
+### Update customer
+
+__Endpoint__
+
+    PUT https://api.airbrite.io/v2/customers/{CUSTOMER_ID}
+
+__Arguments__
+
+    Required: customer_id
+    Optional: 
 
 
 ## Tax
