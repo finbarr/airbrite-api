@@ -3,10 +3,11 @@
 * [Introduction](#introduction)
 * [Getting Started](#getting-started)
 * [Authentication](#authentication)
-* [List of Routes](#list-of-routes)
-* [Collection Pagination and Response Format](#collection-pagination-and-response-format)
 * [Organization](#organization)
+* [Response Format](#response-format)
+* [Collection Pagination](#collection-pagination)
 * [Errors](#errors)
+* [Resource Methods](#resource-methods)
 
 **[Products](#products)**
 * [Create a product](#create-product)
@@ -43,11 +44,12 @@
 * [List all events](#list-all-events)
 * [Types of events](#types-of-events)
 
+
 ## Introduction
 
 The Airbrite API is an ecommerce logic and storage engine designed to be an essential tool for any developer.
 
-Our API is organized around REST and designed to have predictable, resource-oriented URLs, and to use HTTP response codes to indicate API errors. We support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code). JSON will be returned in all responses from the API, including errors.
+Our API is organized around REST and designed to have predictable, resource-oriented URLs, and to use HTTP response codes to indicate API errors. We support [cross-origin resource sharing](http://en.wikipedia.org/wiki/Cross-origin_resource_sharing) to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code). JSON will be returned in all responses from the API, including errors.
 
 To make the Airbrite API as explorable as possible, accounts have test API keys as well as live API keys. These keys can be active at the same time. Data created with test credentials will never access live money.
 
@@ -55,16 +57,15 @@ To make the Airbrite API as explorable as possible, accounts have test API keys 
 ## Getting Started
 
 * The base endpoint URL is: `https://api.airbrite.io`
-* Your access tokens can be found in your account settings
-* We require that all requests are done over SSL
+* All requests must be made over SSL
+* To create new orders, you should setup your product/SKU first
 * To process payments, you must connect to Stripe, which can be done in your account settings
-* There are two environments: live and test
 * Currency amounts and costs are in cents
 
 
 ## Authentication
 
-Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used only on the client-side and will authenticate for only POST requests to Orders. Secret keys are used by your servers to make requests to the Airbrite API.
+Tokens are used to authenticate your requests. There are two sets of tokens (public and secret) for each environment (live and test). Public keys are used only on the client-side and will authenticate for only POST requests for Orders. Secret keys are used by your servers to make requests to the Airbrite API.
 
 All endpoints require authentication. To authenticate with HTTP header, there are 3 methods you can your header, where {ACCESS_TOKEN} is "sk_test_xxx" or "sk_live_xxx":
 
@@ -77,11 +78,11 @@ Alternatively, you can authenticate via query string by simply adding `?access_t
 
 ## Organization
 
-The API is organized by version of the API and resource: `/{VERSION}/{RESOURCE}`. The current version of the API is `v2`. For example, to reach the Products endpoint, you would access `/v2/products`. To access a resource with a specific ID, the route is `/{VERSION}/{RESOURCE}/{id}`, or `/v2/products/52323272fa361e040c000001`.
+The API is organized by version of the API and resource: `/{VERSION}/{RESOURCE}`. The current version of the API is `v2`. For example, to reach the Products endpoint, you would access `/v2/products`. To access a resource with a specific ID, the route is `/{VERSION}/{RESOURCE}/{ID}`, or `/v2/products/52323272fa361e040c000001`.
 
-These resources have full CRUD support:
+These resources have full [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) support:
 
-* Products (/v2/products)
+* Products `/v2/products`
 * Orders
 * Customers
 
@@ -90,19 +91,19 @@ These resources have read-only CRUD support:
 * Events
 * Logs
 
-Because of the inherent complexity of ecommerce, the API also has a number of child resources (or subcollections). Child resources are accessible via the route "/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}" and are related to the parent, and a particular resource can be accessed at "../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}". 
+Because of the inherent complexity of ecommerce, the API also has a number of child resources (or subcollections). Child resources are accessible via the route `/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}` and are related to the parent, and a particular resource can be accessed at `../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}`. 
 
 * Products
     + Events
 * Orders
-    + Payments (/v2/orders/{ORDER_ID}/payments)
+    + Payments `/v2/orders/{ORDER_ID}/payments`
     + Shipments
-    + Events (/v2/orders/{ORDER_ID}/events - read-only)
+    + Events `/v2/orders/{ORDER_ID}/events`
 * Customers
     + Events
     + Orders
 * Events
-    + Webhooks (/v2/events/{EVENT_ID}/webhooks)
+    + Webhooks `/v2/events/{EVENT_ID}/webhooks`
 
 
 ## Response Format
@@ -112,8 +113,8 @@ All responses return with a similar structure.  Here's an example:
 __Response__
 
     {
-      "meta": {             // meta 
-        "code": 200,        // success
+      "meta": {
+        "code": 200,
         "env": "test"
       },
       "paging": {
@@ -125,9 +126,8 @@ __Response__
       },
       "data": [             // collection returns an array, single objects return an object
         {
-          "user_id": "522a72380ac3590000000001",        // This is your user_id
+          "user_id": "522a72380ac3590000000001",
           "_id": "522e4eeccf84bd0000000007",            // ID for specific object
-          "team_id": "522a72670ac3590000000005",        // The team_id for your team
           "name": "Awesome Product",                    
           "sku": "awesome",
           "price": 1000,
@@ -135,8 +135,6 @@ __Response__
           "created_date": "2013-09-09T22:42:52.781Z",   // Created when object is created
           "updated": 1378766572,                        // Updated when object is changed
           "updated_date": "2013-09-09T22:42:52.781Z",   // Updated when object is changed
-          "weight": null,
-          "inventory": null,
           "description": null,
           "metadata": null                              // Metadata can be anything you want to pass in
         }
@@ -145,7 +143,7 @@ __Response__
 
     
 
-## Collection Pagination and Response Format
+## Collections
 
 All collections accept pagination parameters and filters will respond with paging information about the collection. These are read from the passed in query string and can be mixed and matched as necessary.
 
@@ -153,7 +151,7 @@ __Endpoint__
 
     GET https://api.airbrite.io/v2/products?limit=10&skip=5&sort=sku&order=asc
 
-__Parameters__
+__Arguments__
 
     limit:  optional
             Maximum number of objects to return. Defaults to 100.
@@ -220,7 +218,6 @@ Our error responses have the format:
   * /v2/orders/{ORDER_ID}/shipments
   * /v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
 
-
 * Customers
   * /v2/customers
   * /v2/customers/{CUSTOMER_ID}
@@ -237,22 +234,25 @@ Our error responses have the format:
   * /v2/logs/{LOG_ID}
 
 
-### Products
-
-#### List all products
-
-__Endpoint__
-
-    GET https://api.airbrite.io/v2/products
+## Products
 
 __Arguments__
 
-    Required: sku, price
-    Optional: name, description, metadata
+    _id:          string
+    user_id:      string
+    created:      timestamp (Unix)
+    created_date: timestamp (ISO_8601)
+    updated:      timestamp (Unix)
+    updated_date: timestamp (ISO_8601)
+    sku:          string
+    name:         string
+    price:        positive integer or zero
+                  Amount in cents
+    description:  string
+    metadata:     object
 
 
-
-#### Create product
+### Create product
 
 __Endpoint__
 
@@ -261,7 +261,7 @@ __Endpoint__
 __Arguments__
 
     Required: sku, price
-    Optional: name
+    Optional: name, description, metadata
 
 
 ### Retrieve product
@@ -275,6 +275,17 @@ __Arguments__
     Required: product_id
     Optional: none
 
+
+### List all products
+
+__Endpoint__
+
+    GET https://api.airbrite.io/v2/products
+
+__Arguments__
+
+    Required: none
+    Optional: limit, skip, sort, order, since, until
 
 
 ### Update product
@@ -293,20 +304,44 @@ __Arguments__
 
 ## Orders
 
+__Arguments__
+
+    _id:              string
+    user_id:          string
+    created:          timestamp (Unix)
+    created_date:     timestamp (ISO_8601)
+    updated:          timestamp (Unix)
+    updated_date:     timestamp (ISO_8601)
+    currency:         string (3-letter ISO currency code)
+    customer_id:      string
+    discount:         object
+    line_items:       array
+    order_number:     integer
+    shipping:         object
+    shipping_address: object
+    status:           string
+    tax:              object
+    customer:         object
+    payments:         array
+    shipments:        array
+    description:      string
+    metadata:         object
+
+
 ### Create Order
 
-The order resource contains a metadata field for storing key-value pairs of extra data. Store as many of these key-value pairs as you wish.
-
-Regarding line_items, your SKU should be already created.
+If you'd like to add line_items, your product should be already created.
 
 Regarding payments, the order can be created with either:
-1) no prior payment data
+1) no existing payment data
 2) existing payment data (already charged)
 3) a Stripe card token (new payment upon order creation)
 
-If using Stripe, the payment card should be tokenized with `stripe.js` before the order is created. With Stripe, there are three ways to create payments for orders.
+If using Stripe, the payment card should be tokenized with `stripe.js` before the order is created. With Stripe, there are two ways to manage payments. You can make a single charge at order creation or save the payment card for recurring/multiple charges.
 
-* At order creation, capture funds immediately
+To make a single charge, you have the option of capturing funds immediately or placing an authorization on the payment card. If capture is not specified, it will default to capturing funds immediately.
+
+1) At order creation, capture funds immediately
 
         {
             ...,
@@ -320,7 +355,7 @@ If using Stripe, the payment card should be tokenized with `stripe.js` before th
             ...
         }
 
-* At order creation, place an authorization/hold on the card (will drop off after ~7 days unless captured)
+2) At order creation, place an authorization/hold on the card (will drop off after ~7 days unless captured)
 
         {
             ...,
@@ -334,16 +369,27 @@ If using Stripe, the payment card should be tokenized with `stripe.js` before th
             ...
         }
 
-* At order creation, save payment card to be charged at a future date
+To save the payment card, you must pass the card_token in the customer object (rather than the payments array). This will create a Stripe customer object, which allows you to perform recurring charges and track multiple charges that are associated with the same customer.
 
         {
             ...,
+            "customer": {
+                "card_token": "tok_XXXXXXXXXXXXXX"
+            },
+            ...
+        }
+
+If you would like to save the payment card and make a charge immediately at order creation, you would pass the card token in the customer object and payment details in the payments array.
+
+        {
+            ...,
+            "customer": {
+                "card_token": "tok_XXXXXXXXXXXXXX"
+            },
             "payments": [{
                 "gateway": "stripe",
                 "amount": 1337,
-                "currency": "usd",
-                "card_token": "tok_XXXXXXXXXXXXXX",
-                "capture": "hold"
+                "currency": "usd"
             }],
             ...
         }
@@ -356,7 +402,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: line_items, shipping_address, shipping, tax, discount, payments, shipments, description, metadata
+    Optional: customer_id, customer, line_items, shipping_address, shipping, tax, discount, payments, shipments, status, description, metadata
 
 __Body__
 
@@ -379,7 +425,7 @@ __Body__
             "city": "San Francisco",
             "state": "CA",
             "zip": "94105",
-            "country": "US",  // two-letter ISO code
+            "country": "US"  // two-letter ISO code
         },
         "tax": {
             "cost": 89
@@ -395,18 +441,10 @@ __Body__
             "gateway": "stripe",
             "amount": 1337,
             "currency": "usd",
-            "card_token": "tok_XXXXXXXXXXXXXX"
+            "card_token": "tok_XXXXXXXXXXXXXX",
             "capture": "charge"
         }],
-        "shipments": [{
-            "courier": "ups",
-            "method": "ground",
-            "tracking": "1ZXXXXXXXXXXXX",
-            "line_items": [{
-                "sku": "12345ABC",
-                "quantity": 1
-            }]
-        }],
+        "status": "open",
         "metadata": {
             "ref": "facebook"
         }
@@ -433,16 +471,16 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: since/from, until/to, sort, order
+    Optional: limit, skip, sort, order, since, until
 
 
 ### Update order
 
-To update an order (with the exception of customer, payments, and shipping), you can make a PUT request to the endpoint in this section. To create or update customer, payments, or shipments, please use the following endpoints:
+To update an order (with the exception of customer, payments, and shipping), make a PUT request to the endpoint in this section. To create or update customer, payments, or shipments, use the following endpoints:
 
-* https://api.airbrite.io/v2/orders/{ORDER_ID}/customers
-* https://api.airbrite.io/v2/orders/{ORDER_ID}/payments
-* https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments
+* https://api.airbrite.io/v2/customers/{CUSTOMER_ID}
+* https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}
+* https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
 
 __Endpoint__
 
@@ -451,12 +489,14 @@ __Endpoint__
 __Arguments__
 
     Required: order_id
-    Optional: line_items, shipping_address, shipping, tax, discount, metadata
+    Optional: line_items, shipping_address, shipping, tax, discount, status, 9description, metadata
 
 
 ## Payments
 
 ### Create payment
+
+If you're creating a new charge, pass in the card_token.
 
 __Endpoint__
 
@@ -464,8 +504,19 @@ __Endpoint__
 
 __Arguments__
 
-    Required: order_id, gateway, currency, amount
-    Optional: (card_token and capture OR charge_token), metadata
+    Required: order_id, gateway, currency, amount, card_token
+    Optional: capture, metadata
+
+If you're adding an existing charge, pass in the charge_token.
+
+__Endpoint__
+
+    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/payments
+
+__Arguments__
+
+    Required: order_id, gateway, charge_token
+    Optional: metadata
 
 
 ### Retrieve payment
@@ -489,7 +540,7 @@ __Endpoint__
 __Arguments__
 
     Required: order_id
-    Optional: since/from, until/to, sort, order
+    Optional: limit, skip, sort, order, since, until
 
 
 ### Capture payment
@@ -502,7 +553,6 @@ __Arguments__
 
     Required: order_id, payment_id
     Optional: none
-
 
 
 ### Refund payment
@@ -552,7 +602,7 @@ __Endpoint__
 __Arguments__
 
     Required: order_id
-    Optional: since/from, until/to, sort, order
+    Optional: limit, skip, sort, order, since, until
 
 
 ## Tax
@@ -627,7 +677,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: since/from, until/to, sort, order
+    Optional: limit, skip, sort, order, since, until
 
 
 ### Types of events
