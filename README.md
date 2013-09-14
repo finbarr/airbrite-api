@@ -241,6 +241,9 @@ __Arguments__
                   Store as many key-value pairs of extra data as you wish
 
 
+-------
+
+
 ### Create product
 
 __Endpoint__
@@ -298,6 +301,9 @@ __Arguments__
     Optional: none
 
 
+-------
+
+
 ## Orders
 
 __Arguments__
@@ -329,6 +335,9 @@ __Arguments__
     description:      string
     metadata:         object
                       Store as many key-value pairs of extra data as you wish
+
+
+-------
 
 
 ### Create Order
@@ -453,6 +462,10 @@ __Body__
         }
     }
 
+
+-------
+
+
 ### Retrieve order
 
 __Endpoint__
@@ -465,6 +478,9 @@ __Arguments__
     Optional: none
 
 
+-------
+
+
 ### List all orders
 
 __Endpoint__
@@ -475,6 +491,9 @@ __Arguments__
 
     Required: none
     Optional: limit, skip, sort, order, since, until
+
+
+-------
 
 
 ### Update order
@@ -493,6 +512,9 @@ __Arguments__
 
     Required: order_id
     Optional: line_items, shipping_address, shipping, tax, discount, status, description, metadata
+
+
+-------
 
 
 ## Payments
@@ -526,6 +548,9 @@ __Arguments__
                           Store as many key-value pairs of extra data as you wish
 
 
+-------
+
+
 ### Create payment
 
 1) If you're creating a new charge, pass in the card_token.
@@ -551,6 +576,9 @@ __Arguments__
     Optional: metadata
 
 
+-------
+
+
 ### Retrieve payment
 
 __Endpoint__
@@ -561,6 +589,9 @@ __Arguments__
 
     Required: order_id, payment_id
     Optional: none
+
+
+-------
 
 
 ### List all payments
@@ -575,6 +606,9 @@ __Arguments__
     Optional: limit, skip, sort, order, since, until
 
 
+-------
+
+
 ### Capture payment
 
 __Endpoint__
@@ -587,6 +621,9 @@ __Arguments__
     Optional: none
 
 
+-------
+
+
 ### Refund payment
 
 __Endpoint__
@@ -597,6 +634,9 @@ __Arguments__
 
     Required: order_id, payment_id
     Optional: amount
+
+
+-------
 
 
 ## Shipments
@@ -613,6 +653,9 @@ __Arguments__
     Optional: courier, shipping_address, tracking, method, metadata
 
 
+-------
+
+
 ### Retrieve shipment
 
 __Endpoint__
@@ -625,6 +668,9 @@ __Arguments__
     Optional: none
 
 
+-------
+
+
 ### List all shipments
 
 __Endpoint__
@@ -635,6 +681,9 @@ __Arguments__
 
     Required: order_id
     Optional: limit, skip, sort, order, since, until
+
+
+-------
 
 
 ## Customers
@@ -659,6 +708,9 @@ __Arguments__
                       Store as many key-value pairs of extra data as you wish
 
 
+-------
+
+
 ### Create customer
 
 __Endpoint__
@@ -669,6 +721,9 @@ __Arguments__
 
     Required: 
     Optional: 
+
+
+-------
 
 
 ### Retrieve customer
@@ -683,6 +738,9 @@ __Arguments__
     Optional: none
 
 
+-------
+
+
 ### List all customers
 
 __Endpoint__
@@ -695,6 +753,9 @@ __Arguments__
     Optional: limit, skip, sort, order, since, until
 
 
+-------
+
+
 ### Update customer
 
 __Endpoint__
@@ -705,6 +766,9 @@ __Arguments__
 
     Required: customer_id
     Optional: 
+
+
+-------
 
 
 ## Tax
@@ -738,6 +802,9 @@ __Body__
     }
 
 
+-------
+
+
 ## Account
 
 ### Retrieve account
@@ -752,11 +819,17 @@ __Arguments__
     Optional: none
 
 
+-------
+
+
 ## Events
 
 Events are our way of letting you know about something interesting that has just happened in your account. When an interesting event occurs, we create a new event object. For example, when a payment is successfully charged, we create a order.payment.succeeded event. Note that many API requests may cause multiple events to be created.
 
 Like our other API resources, you can retrieve an individual event or a list of events from the API. We also have a system for sending the events directly to your server, called webhooks. Webhooks are managed in your account settings.
+
+
+-------
 
 
 ### Retrieve event
@@ -771,6 +844,9 @@ __Arguments__
     Optional: none
 
 
+-------
+
+
 ### List all events
 
 __Endpoint__
@@ -781,6 +857,9 @@ __Arguments__
 
     Required: none
     Optional: limit, skip, sort, order, since, until
+
+
+-------
 
 
 ### Types of events
