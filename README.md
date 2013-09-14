@@ -145,17 +145,17 @@ __Endpoint__
 
 __Params__
 
-    limit: optional
-            Maximum number of objects to return.  Defaults to 100.
-    skip:  optional
+    limit:  optional
+            Maximum number of objects to return. Defaults to 100.
+    skip:   optional
             Number of objects to skip over before returning results
-    sort:  optional
+    sort:   optional
             Which field to sort by
-    order: optional
+    order:  optional
             Which way to sort (1 or -1 and asc or desc are the same, respectively)
-    since: optional
+    since:  optional
             Matches all items updated after unix timestamp
-    until: optional
+    until:  optional
             Matches all items updated before unix timestamp
 
 __Response__
