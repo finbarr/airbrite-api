@@ -4,7 +4,7 @@
 * [Getting Started](#getting-started)
 * [Authentication](#authentication)
 * [List of Routes](#list-of-routes)
-# [Collection Pagination and Response Format](#collection-pagination-and-response-format)
+* [Collection Pagination and Response Format](#collection-pagination-and-response-format)
 * [Organization](#organization)
 * [Errors](#errors)
 
