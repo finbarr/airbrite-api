@@ -3,6 +3,9 @@
 * [Introduction](#introduction)
 * [Getting Started](#getting-started)
 * [Authentication](#authentication)
+* [List of Routes](#list-of-routes)
+# [Collection Pagination and Response Format](#collection-pagination-and-response-format)
+* [Organization](#organization)
 * [Errors](#errors)
 
 **[Products](#products)**
@@ -143,7 +146,7 @@ __Endpoint__
 
     GET https://api.airbrite.io/v2/products?limit=10&skip=5&sort=sku&order=asc
 
-__Params__
+__Parameters__
 
     limit:  optional
             Maximum number of objects to return. Defaults to 100.
