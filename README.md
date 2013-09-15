@@ -381,11 +381,9 @@ _If using Stripe, the payment card must be tokenized with `stripe.js` before the
 
 You can immediately attach a Payment to the newly created Order by including the "payments" connection. There are 3 way to create a Payment with this method:
 
-1) One-time-use Stripe Charge using a tokenized credit card
-
-2) Use the default Credit Card belonging to the Airbrite Customer on the Order
-
-3) Use a specific Credit Card belonging to the Airbrite Custoner on the Order
+    1) One-time-use Stripe Charge using a tokenized credit card
+    2) Use the default Credit Card belonging to the Airbrite Customer on the Order
+    3) Use a specific Credit Card belonging to the Airbrite Custoner on the Order
 
 _When creating a Payment, you have the option of capturing funds immediately or placing an authorization on the payment card. If capture is not specified, it will default to capturing funds immediately._
 
