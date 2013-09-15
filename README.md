@@ -322,6 +322,7 @@ __Arguments__
     line_items:       array
     shipping_address: object
                       Contains name, line1, line2, city, state, zip, country, phone
+                      country must be a 2-letter ISO country code
     discount:         object
     shipping:         object
                       Contains cost (integer)
