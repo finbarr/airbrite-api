@@ -308,33 +308,35 @@ __Arguments__
 
 __Arguments__
 
-    _id:              string
-    user_id:          string
+    _id:              string (id)
+    user_id:          string (id)
+    customer_id:      string (id)
     created:          timestamp (Unix)
     created_date:     timestamp (ISO_8601)
     updated:          timestamp (Unix)
     updated_date:     timestamp (ISO_8601)
-    currency:         string
-                      3-letter ISO currency code
-    customer_id:      string
-    discount:         object
-    line_items:       array
+    currency:         string (3-letter ISO currency code)
     order_number:     integer
                       Automatically designated by Airbrite
-    shipping:         object
-                      Contains cost (integer)
+    status:           string
+    line_items:       array
     shipping_address: object
                       Contains name, line1, line2, city, state, zip, country, phone
-    status:           string
+    discount:         object
+    shipping:         object
+                      Contains cost (integer)
     tax:              object
                       Contains cost (integer)
+    description:      string
+    metadata:         object
+                      Store as many key-value pairs of extra data as you wish
+
+__Connections__ (optional)
+
     customer:         object
     payments:         array
                       Contains gateway, amount, charge_token
     shipments:        array
-    description:      string
-    metadata:         object
-                      Store as many key-value pairs of extra data as you wish
 
 
 -------
@@ -342,9 +344,32 @@ __Arguments__
 
 ### Create Order
 
-If you'd like to add line_items, your product should be already created.
+__Note:__ If you'd like to add line_items, your product needs to be already created.
 
-Regarding payments, the order can be created with either:
+__Assigning an Order to an existing Customer__
+
+If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include the "customer" connection like so:
+
+    {
+        "customer": {
+            "_id": "XXXXXXXXXXXXXXXXXXXXXXXX"
+        }
+    }
+
+If you want to create a new Airbrite Customer record at the time of creation, include the "customer" connection like so:\
+
+_This can also include additional properties you would like to associate with the customer..._
+
+    {
+        "customer": {
+            "name": "Kanye East",
+            "email": "kanye.east@west.com",
+            ...
+        }
+    }
+
+__Regarding payments, the order can be created with either:__
+
 1) no existing payment data
 2) existing payment data (already charged)
 3) a Stripe card token (new payment upon order creation)
