@@ -348,7 +348,7 @@ __Note:__ If you'd like to add line_items, your product needs to be already crea
 
 __Assigning an Order to an existing Customer__
 
-If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include the "customer" connection like so:
+If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include the "customer" connection with the customer "_id":
 
     {
         "customer": {
@@ -356,7 +356,7 @@ If you want to assign the Order to an existing Airbrite Customer record at the t
         }
     }
 
-If you want to create a new Airbrite Customer record at the time of creation, include the "customer" connection like so:\
+If you want to create a new Airbrite Customer record at the time of creation, include the "customer" connection and do not include an "_id":
 
 _This can also include additional properties you would like to associate with the customer..._
 
@@ -364,12 +364,16 @@ _This can also include additional properties you would like to associate with th
         "customer": {
             "name": "Kanye East",
             "email": "kanye.east@west.com",
-            "card_token": "tok_xxxxxxxx"
+            "card_token": "tok_xxxxxxxx",
+            "metadata": {
+                "gender": "male",
+                "occupation": "rapper"
+            }
             ...
         }
     }
 
-The "card_token" property allows you to assign and save a Stripe tokenized credit card to the Customer for future use. This will create a Stripe customer object, which allows you to perform recurring charges and track multiple charges that are associated with the same customer.
+__Note:__ The "card_token" property allows you to assign and save a Stripe tokenized credit card to the Customer. This will create a Stripe customer object, which allows you to perform recurring charges and track multiple charges that are associated with the same customer.
 
 __Attaching a Payment at the time of Order creation:__
 
@@ -378,12 +382,14 @@ _If using Stripe, the payment card must be tokenized with `stripe.js` before the
 You can immediately attach a Payment to the newly created Order by including the "payments" connection. There are 3 way to create a Payment with this method:
 
 1) One-time-use Stripe Charge using a tokenized credit card
+
 2) Use the default Credit Card belonging to the Airbrite Customer on the Order
+
 3) Use a specific Credit Card belonging to the Airbrite Custoner on the Order
 
-_A note about the "capture" property:_ When creating a Payment, you have the option of capturing funds immediately or placing an authorization on the payment card. If capture is not specified, it will default to capturing funds immediately.
+_When creating a Payment, you have the option of capturing funds immediately or placing an authorization on the payment card. If capture is not specified, it will default to capturing funds immediately._
 
-    capture has 3 possible values: charge, auth, hold
+    __capture__ has 3 possible values: charge, auth, hold
         charge - immediately capture the charge
         auth - place an authorization on the charge
         hold - no-op, this just creates a stub payment allowing you to charge or auth at a later time
@@ -404,7 +410,7 @@ _Examples_:
             ...
         }
 
-2) At order creation, place an authorization on the default card belonging to the customer (will drop off after ~7 days unless captured)
+2) At order creation, place an authorization on the __default card__ belonging to the customer (will drop off after ~7 days unless captured)
 
         {
             ...,
@@ -417,7 +423,7 @@ _Examples_:
             ...
         }
 
-3) At order creation, place a hold (stub payment) on a specific card belonging to the customer
+3) At order creation, place a hold (stub payment) on a __specific card__ belonging to the customer
 
     {
         ...,
