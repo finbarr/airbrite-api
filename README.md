@@ -364,21 +364,33 @@ _This can also include additional properties you would like to associate with th
         "customer": {
             "name": "Kanye East",
             "email": "kanye.east@west.com",
+            "card_token": "tok_xxxxxxxx"
             ...
         }
     }
 
-__Regarding payments, the order can be created with either:__
+The "card_token" property allows you to assign and save a Stripe tokenized credit card to the Customer for future use. This will create a Stripe customer object, which allows you to perform recurring charges and track multiple charges that are associated with the same customer.
 
-1) no existing payment data
-2) existing payment data (already charged)
-3) a Stripe card token (new payment upon order creation)
+__Attaching a Payment at the time of Order creation:__
 
-If using Stripe, the payment card should be tokenized with `stripe.js` before the order is created. With Stripe, there are two ways to manage payments. You can make a single charge at order creation or save the payment card for recurring/multiple charges.
+_If using Stripe, the payment card must be tokenized with `stripe.js` before the order is created._
 
-To make a single charge, you have the option of capturing funds immediately or placing an authorization on the payment card. If capture is not specified, it will default to capturing funds immediately.
+You can immediately attach a Payment to the newly created Order by including the "payments" connection. There are 3 way to create a Payment with this method:
 
-1) At order creation, capture funds immediately
+1) One-time-use Stripe Charge using a tokenized credit card
+2) Use the default Credit Card belonging to the Airbrite Customer on the Order
+3) Use a specific Credit Card belonging to the Airbrite Custoner on the Order
+
+_A note about the "capture" property:_ When creating a Payment, you have the option of capturing funds immediately or placing an authorization on the payment card. If capture is not specified, it will default to capturing funds immediately.
+
+    capture has 3 possible values: charge, auth, hold
+        charge - immediately capture the charge
+        auth - place an authorization on the charge
+        hold - no-op, this just creates a stub payment allowing you to charge or auth at a later time
+
+_Examples_:
+
+1) At order creation, use a one-time-use card token and capture funds immediately
 
         {
             ...,
@@ -386,13 +398,13 @@ To make a single charge, you have the option of capturing funds immediately or p
                 "gateway": "stripe",
                 "amount": 1337,
                 "currency": "usd",
-                "card_token": "tok_XXXXXXXXXXXXXX",
-                "capture": "charge"
+                "capture": "charge",
+                "card_token": "tok_XXXXXXXXXXXXXX"
             }],
             ...
         }
 
-2) At order creation, place an authorization/hold on the card (will drop off after ~7 days unless captured)
+2) At order creation, place an authorization on the default card belonging to the customer (will drop off after ~7 days unless captured)
 
         {
             ...,
@@ -400,36 +412,24 @@ To make a single charge, you have the option of capturing funds immediately or p
                 "gateway": "stripe",
                 "amount": 1337,
                 "currency": "usd",
-                "card_token": "tok_XXXXXXXXXXXXXX",
                 "capture": "auth"
             }],
             ...
         }
 
-To save the payment card, you must pass the card_token in the customer object (rather than the payments array). This will create a Stripe customer object, which allows you to perform recurring charges and track multiple charges that are associated with the same customer.
+3) At order creation, place a hold (stub payment) on a specific card belonging to the customer
 
-        {
-            ...,
-            "customer": {
-                "card_token": "tok_XXXXXXXXXXXXXX"
-            },
-            ...
-        }
-
-If you would like to save the payment card and make a charge immediately at order creation, you would pass the card token in the customer object and payment details in the payments array.
-
-        {
-            ...,
-            "customer": {
-                "card_token": "tok_XXXXXXXXXXXXXX"
-            },
-            "payments": [{
-                "gateway": "stripe",
-                "amount": 1337,
-                "currency": "usd"
-            }],
-            ...
-        }
+    {
+        ...,
+        "payments": [{
+            "gateway": "stripe",
+            "amount": 1337,
+            "currency": "usd",
+            "capture": "auth",
+            "customer_card_token": "card_XXXXXXXXXXXX"
+        }],
+        ...
+    }
 
 
 __Endpoint__
