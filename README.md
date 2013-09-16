@@ -362,6 +362,7 @@ If you want to create a new Airbrite Customer record at the time of creation, in
 _This can also include additional properties you would like to associate with the customer..._
 
     {
+        ...,
         "customer": {
             "name": "Kanye East",
             "email": "kanye.east@west.com",
@@ -369,7 +370,7 @@ _This can also include additional properties you would like to associate with th
             "metadata": {
                 "gender": "male",
                 "occupation": "rapper"
-            }
+            },
             ...
         }
     }
@@ -430,7 +431,7 @@ _Examples_:
             "gateway": "stripe",
             "amount": 1337,
             "currency": "usd",
-            "capture": "auth",
+            "capture": "hold",
             "customer_card_token": "card_XXXXXXXXXXXX"
         }],
         ...
