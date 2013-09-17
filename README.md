@@ -320,10 +320,12 @@ __Arguments__
                       Automatically designated by Airbrite
     status:           string
     line_items:       array
+                      Contains sku, quantity
     shipping_address: object
                       Contains name, line1, line2, city, state, zip, country, phone
-                      country must be a 2-letter ISO country code
+                      Country must be a 2-letter ISO country code
     discount:         object
+                      Contains cost (integer)
     shipping:         object
                       Contains cost (integer)
     tax:              object
@@ -336,7 +338,7 @@ __Connections__ (optional)
 
     customer:         object
     payments:         array
-                      Contains gateway, amount, charge_token
+                      Contains gateway, amount, charge_token, capture (optional)
     shipments:        array
 
 
@@ -349,7 +351,7 @@ __Note:__ If you'd like to add line_items, your product needs to be already crea
 
 __Assigning an Order to an existing Customer__
 
-If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include the "customer" connection with the customer "_id":
+If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include the "customer" connection with the customer `_id`:
 
     {
         "customer": {
@@ -357,7 +359,7 @@ If you want to assign the Order to an existing Airbrite Customer record at the t
         }
     }
 
-If you want to create a new Airbrite Customer record at the time of creation, include the "customer" connection and do not include an "_id":
+If you want to create a new Airbrite Customer record at the time of creation, include the "customer" connection and do not include an `_id`:
 
 _This can also include additional properties you would like to associate with the customer..._
 
@@ -375,7 +377,7 @@ _This can also include additional properties you would like to associate with th
         }
     }
 
-__Note:__ The "card_token" property allows you to assign and save a Stripe tokenized credit card to the Customer. This will create a Stripe customer object, which allows you to perform recurring charges and track multiple charges that are associated with the same customer.
+__Note:__ The `card_token` property allows you to assign and save a Stripe tokenized credit card to the Customer. This will create a Stripe customer object, which allows you to perform recurring charges and track multiple charges that are associated with the same customer.
 
 __Attaching a Payment at the time of Order creation:__
 
@@ -445,7 +447,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: customer_id, customer, line_items, shipping_address, shipping, tax, discount, payments, shipments, status, description, metadata
+    Optional: customer, line_items, shipping_address, shipping, tax, discount, payments, shipments, status, description, metadata
 
 __Body__
 
@@ -750,8 +752,8 @@ __Endpoint__
 
 __Arguments__
 
-    Required: 
-    Optional: 
+    Required: none
+    Optional: name, email, card_token, addresses, shipping_address, description, metadata
 
 
 -------
@@ -796,7 +798,7 @@ __Endpoint__
 __Arguments__
 
     Required: customer_id
-    Optional: 
+    Optional: name, email, card_token, addresses, shipping_address, description, metadata
 
 
 -------
