@@ -683,7 +683,7 @@ __Endpoint__
 __Arguments__
 
     Required: order_id, line_items
-    Optional: courier, shipping_address, tracking, method, metadata
+    Optional: courier, shipping_address, tracking, method, status, description, metadata
 
 
 -------
