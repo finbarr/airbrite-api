@@ -170,7 +170,7 @@ __Response__
             "offset": 5,
             "limit": 10,
             "has_more": true
-        }
+        },
         "data": {
           ...  
         }
@@ -179,7 +179,7 @@ __Response__
 
 ## Errors
 
-Airbrite uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a charge failed, etc.), and codes in the 5xx range indicate an error with Airbrite's servers.
+Airbrite uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, a payment failed, etc.), and codes in the 5xx range indicate an error with Airbrite's servers.
 
 Our error responses have the format: 
 
@@ -298,7 +298,7 @@ __Endpoint__
 __Arguments__
 
     Required: product_id
-    Optional: none
+    Optional: sku, price, name, description, metadata
 
 
 -------
@@ -319,6 +319,7 @@ __Arguments__
     order_number:     integer
                       Automatically designated by Airbrite
     status:           string
+                      Order state
     line_items:       array
                       Contains sku, quantity
     shipping_address: object
@@ -554,9 +555,9 @@ __Arguments__
 
 __Arguments__
 
-    _id:                  string
-    user_id:              string
-    order_id:             string
+    _id:                  string (id)
+    user_id:              string (id)
+    order_id:             string (id)
     created:              timestamp (Unix)
     created_date:         timestamp (ISO_8601)
     updated:              timestamp (Unix)
