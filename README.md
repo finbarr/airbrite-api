@@ -779,7 +779,7 @@ __Arguments__
 
 __Endpoint__
 
-GET https://api.airbrite.io/v2/customers
+    GET https://api.airbrite.io/v2/customers
 
 __Arguments__
 
