@@ -352,7 +352,7 @@ __Note:__ If you'd like to add line_items, your product needs to be already crea
 
 __Assigning an Order to an existing Customer__
 
-If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include the "customer" connection with the customer `_id`:
+If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include either "customer_id" or the "customer" connection with the customer "_id":
 
     {
         "customer_id": "XXXXXXXXXXXXXXXXXXXXXXXX"
