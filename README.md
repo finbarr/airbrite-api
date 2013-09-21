@@ -337,7 +337,7 @@ __Arguments__
 
 __Connections__ (optional)
 
-    customer:         object
+    customer:         object (only if you did not provide a customer_id)
     payments:         array
                       Contains gateway, amount, charge_token, capture (optional)
     shipments:        array
