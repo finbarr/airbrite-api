@@ -647,7 +647,7 @@ This endpoint works if you've previously authorized a charge.
 
 __Endpoint__
 
-    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
+    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/capture
 
 __Arguments__
 
@@ -664,7 +664,7 @@ This endpoint works if you previously created a payment stub (hold) and need to 
 
 __Endpoint__
 
-    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/charge
+    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/charge
 
 __Arguments__
 
@@ -678,7 +678,7 @@ __Arguments__
 
 __Endpoint__
 
-    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
+    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/refund
 
 __Arguments__
 
