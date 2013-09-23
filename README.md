@@ -22,6 +22,7 @@
         + [Retrieve a payment](#retrieve-payment)
         + [List all payments](#list-all-payments)
         + [Capture a payment](#capture-payment)
+        + [Charge a pre-order](#charge-preorder)
         + [Refund a payment](#refund-payment)
     + [Shipments](#shipments)
         + [Create a shipment](#create-shipment)
@@ -653,6 +654,22 @@ __Arguments__
     Required: order_id, payment_id
     Optional: none
 
+
+-------
+
+
+### Charge preorder
+
+This endpoint works if you previously created a payment stub (hold) and need to charge it.
+
+__Endpoint__
+
+    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/charge
+
+__Arguments__
+
+    Required: order_id, payment_id
+    Optional: none
 
 -------
 
