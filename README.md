@@ -337,7 +337,7 @@ __Arguments__
 
 __Connections__ (optional)
 
-    customer:         object
+    customer:         object (only if you did not provide a customer_id)
     payments:         array
                       Contains gateway, amount, charge_token, capture (optional)
     shipments:        array
@@ -352,11 +352,18 @@ __Note:__ If you'd like to add line_items, your product needs to be already crea
 
 __Assigning an Order to an existing Customer__
 
-If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include the "customer" connection with the customer `_id`:
+If you want to assign the Order to an existing Airbrite Customer record at the time of creation, make sure to include either "customer_id" or the "customer" connection with the customer "_id":
+
+    {
+        "customer_id": "XXXXXXXXXXXXXXXXXXXXXXXX"
+    }
+
+OR if you want to also update something about the Customer:
 
     {
         "customer": {
-            "_id": "XXXXXXXXXXXXXXXXXXXXXXXX"
+            "_id": "XXXXXXXXXXXXXXXXXXXXXXXX",
+            "description": "updated customer!"
         }
     }
 
