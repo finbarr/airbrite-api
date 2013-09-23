@@ -76,16 +76,6 @@ Alternatively, you can authenticate via query string by simply adding `?access_t
 
 The API is organized by version of the API and resource: `/{VERSION}/{RESOURCE}`. The current version of the API is `v2`. For example, to reach the Products endpoint, you would access `/v2/products`. To access a resource with a specific ID, the route is `/{VERSION}/{RESOURCE}/{ID}`.
 
-These resources have full [CRUD](http://en.wikipedia.org/wiki/Create,_read,_update_and_delete) support:
-
-* Products
-* Orders
-* Customers
-
-These resources have read-only CRUD support:
-
-* Events
-
 The API also has a number of child resources (or subcollections). Child resources are accessible via the route `/{VERSION}/{RESOURCE}/{RESOURCE_ID}/{CHILD_RESOURCE}`. A specific resource can be accessed at `../{CHILD_RESOURCE}/{CHILD_RESOURCE_ID}`. 
 
 Below are the parent and their respective child resources.
@@ -651,6 +641,8 @@ __Arguments__
 
 
 ### Capture payment
+
+This endpoint works if you've previously authorized a charge.
 
 __Endpoint__
 
