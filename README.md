@@ -761,7 +761,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: name, email, card_token, addresses, shipping_address, description, metadata
+    Optional: name, email, card_token, addresses, address, description, metadata
 
 
 -------
@@ -806,7 +806,7 @@ __Endpoint__
 __Arguments__
 
     Required: customer_id
-    Optional: name, email, card_token, addresses, shipping_address, description, metadata
+    Optional: name, email, card_token, addresses, address, description, metadata
 
 
 -------
