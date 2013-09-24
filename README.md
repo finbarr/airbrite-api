@@ -21,8 +21,9 @@
         + [Create a payment](#create-payment)
         + [Retrieve a payment](#retrieve-payment)
         + [List all payments](#list-all-payments)
-        + [Capture a payment](#capture-payment)
         + [Charge a pre-order](#charge-preorder)
+        + [Authorize a payment](#authorize-payment)
+        + [Capture a payment](#capture-payment)
         + [Refund a payment](#refund-payment)
     + [Shipments](#shipments)
         + [Create a shipment](#create-shipment)
@@ -392,8 +393,8 @@ _When creating a Payment, you have the option of capturing funds immediately or 
 
     __capture__ has 3 possible values: charge, auth, hold
         charge - immediately capture the charge
-        auth - place an authorization on the charge
-        hold - no-op, this just creates a stub payment allowing you to charge or auth at a later time
+        authorize - place an authorization on the charge
+        hold - no-op, this just creates a stub payment allowing you to charge or authorize at a later time
 
 _Examples_:
 
@@ -419,7 +420,7 @@ _Examples_:
                 "gateway": "stripe",
                 "amount": 1337,
                 "currency": "usd",
-                "capture": "auth"
+                "capture": "authorize"
             }],
             ...
         }
@@ -641,6 +642,40 @@ __Arguments__
 -------
 
 
+### Charge preorder
+
+This endpoint works if you previously created a payment stub (hold) and need to charge it.
+
+__Endpoint__
+
+    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/charge
+
+__Arguments__
+
+    Required: order_id, payment_id
+    Optional: none
+
+
+-------
+
+
+### Authorize payment
+
+This endpoint works if you previously created a payment stub (hold) and need to place a hold / authorize the payment card.
+
+__Endpoint__
+
+    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/authorize
+
+__Arguments__
+
+    Required: order_id, payment_id
+    Optional: none
+
+
+-------
+
+
 ### Capture payment
 
 This endpoint works if you've previously authorized a charge.
@@ -654,22 +689,6 @@ __Arguments__
     Required: order_id, payment_id
     Optional: none
 
-
--------
-
-
-### Charge preorder
-
-This endpoint works if you previously created a payment stub (hold) and need to charge it.
-
-__Endpoint__
-
-    POST https://api.airbrite.io/v2/orders/{ORDER_ID}/payments/{PAYMENT_ID}/charge
-
-__Arguments__
-
-    Required: order_id, payment_id
-    Optional: none
 
 -------
 
