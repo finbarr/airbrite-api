@@ -22,7 +22,7 @@
         + [Create a payment](#create-payment)
         + [Retrieve a payment](#retrieve-payment)
         + [List all payments](#list-all-payments)
-        + [Charge a pre-order](#charge-preorder)
+        + [Charge a pre-order](#charge-pre-order)
         + [Authorize a payment](#authorize-payment)
         + [Capture a payment](#capture-payment)
         + [Refund a payment](#refund-payment)
@@ -194,7 +194,7 @@ Webhook data is sent as JSON in the request's body. The full event details are i
 
 To acknowledge that you received the webhook without any problem, your server should return a 200 HTTP status code. Any other information you return in the request headers or request body will be ignored. Any response code outside the 200 range, including 3xx codes, will indicate to Airbrite that you did not receive the webhook. When a webhook is not received for whatever reason, Airbrite will continue trying to send the webhook 3 times (30 seconds apart). 
 
-Please note that Airbrite intends to move to a system where we'll continue trying to send the webhook once an hour for up to 3 days.
+Please note that Airbrite intends to move to a system where we'll continue trying to send the webhook once an hour for up to 3 days until the webhook is received.
 
 
 
@@ -661,7 +661,7 @@ __Arguments__
 -------
 
 
-### Charge preorder
+### Charge pre-order
 
 This endpoint works if you previously created a payment stub (hold) and need to charge it.
 
