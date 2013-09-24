@@ -6,6 +6,7 @@
 * [Organization](#organization)
 * [Response Format](#response-format)
 * [Errors](#errors)
+* [Webhooks](#webhooks)
 * [Resource Methods](#resource-methods)
     + [Products](#products)
         + [Create a product](#create-product)
@@ -94,7 +95,6 @@ Below are the parent and their respective child resources.
     + Events
 * Account
 * Events
-    + Webhooks
 
 
 ## Response Format
@@ -184,6 +184,17 @@ Our error responses have the format:
         },
         "data": "User with email already exists."
     }
+
+
+## Webhooks
+
+Use webhooks to be notified about [events](#types-of-events) that happen in your Airbrite account. Webhooks can be configured in the webhooks section of your Account Settings. 
+
+Webhook data is sent as JSON in the request's body. The full event details are included and can be used directly. Alternatively, the event is also available in the Airbrite API. If security is a concern, or if it's important to confirm that Airbrite sent the webhook, you should only use the ID sent in your webhook and should request the remaining details from the Airbrite API directly. We also advise you to guard against replay-attacks by recording which events you receive, and never processing events twice.
+
+To acknowledge that you received the webhook without any problem, your server should return a 200 HTTP status code. Any other information you return in the request headers or request body will be ignored. Any response code outside the 200 range, including 3xx codes, will indicate to Airbrite that you did not receive the webhook. When a webhook is not received for whatever reason, Airbrite will continue trying to send the webhook 3 times (30 seconds apart). 
+
+Please note that Airbrite intends to move to a system where we'll continue trying to send the webhook once an hour for up to 3 days.
 
 
 
