@@ -29,6 +29,7 @@
         + [Create a shipment](#create-shipment)
         + [Retrieve a shipment](#retrieve-shipment)
         + [List all shipments](#list-all-shipments)
+        + [Update a shipment](#update-shipment)
     + [Customers](#customers)
         + [Create a customer](#create-customer)
         + [Retrieve a single customer](#retrieve-customer)
@@ -131,9 +132,9 @@ __Response__
       ]
     }
 
-All collections accept pagination parameters and filters will respond with paging information about the collection. These are read from the passed in query string and can be mixed and matched as necessary.
+All collections accept pagination parameters. Filters will respond with paging information about the collection.
 
-__Endpoint__
+__Example Endpoint__
 
     GET https://api.airbrite.io/v2/products?limit=10&skip=5&sort=sku&order=asc
 
@@ -152,7 +153,7 @@ __Arguments__
     until:  optional
             Matches all items updated before unix timestamp
 
-__Response__
+__Example Response__
 
     { 
         ...,
@@ -584,7 +585,6 @@ __Arguments__
     card:                 object
                           Contains last4, type, exp_month, exp_year
     billing_address:      object
-    description:          string
     metadata:             object
                           Store as many key-value pairs of extra data as you wish
 
@@ -718,6 +718,23 @@ __Arguments__
 
 ## Shipments
 
+__Arguments__
+
+    _id:                  string (id)
+    order_id:             string (id)
+    created:              timestamp (Unix)
+    created_date:         timestamp (ISO_8601)
+    updated:              timestamp (Unix)
+    updated_date:         timestamp (ISO_8601)
+    courier:              string
+    shipping_address:     object
+    tracking:             string
+    method:               string
+    status:               string
+    metadata:             object
+                          Store as many key-value pairs of extra data as you wish
+
+
 ### Create shipment
 
 __Endpoint__
@@ -727,7 +744,7 @@ __Endpoint__
 __Arguments__
 
     Required: order_id, line_items
-    Optional: courier, shipping_address, tracking, method, status, description, metadata
+    Optional: courier, shipping_address, tracking, method, status, metadata
 
 
 -------
@@ -763,6 +780,20 @@ __Arguments__
 -------
 
 
+### Update shipment
+
+__Endpoint__
+
+    PUT https://api.airbrite.io/v2/orders/{ORDER_ID}/shipments/{SHIPMENT_ID}
+
+__Arguments__
+
+    Required: order_id, shipment_id
+    Optional: line_items, courier, shipping_address, tracking, method, status, metadata
+
+
+-------
+
 ## Customers
 
 __Arguments__
@@ -776,6 +807,7 @@ __Arguments__
     name:               string
     email:              string
     addresses:          array
+    address:            object
     default_address:    object
                         Contains name, line1, line2, city, state, zip, country, phone
     card_token:         string
@@ -852,6 +884,19 @@ __Arguments__
 
 
 ## Tax
+
+__Arguments__
+
+    zip:           zip
+    amount:        integer
+    nexus_zips:    string
+    tax_amount:    integer
+    tax_rate:      float
+    state_rate:    float
+    county_rate:   float
+    city_rate:     float
+    special_rate:  float
+
 
 To calculate sales tax, you should add your business' zip codes in your account settings. Otherwise, you must specify them as part of the request.
 
@@ -960,5 +1005,7 @@ __Events__
 * order.payment.authorized
 * order.payment.captured
 * order.payment.refunded
+* order.shipment.created
+* order.shipment.updated
 * product.created
 * product.updated
