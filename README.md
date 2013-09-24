@@ -359,6 +359,14 @@ OR if you want to also update something about the Customer:
         }
     }
 
+If you want to import an existing Stripe Customer (i.e., saved payment cards), you can pass the "stripe_customer_id" as part of the customer object. 
+
+    {
+        "customer": {
+            "stripe_customer_id": "cus_xxxxxxxxxxxxx"
+        }
+    }
+
 If you want to create a new Airbrite Customer record at the time of creation, include the "customer" connection and do not include an `_id`:
 
 _This can also include additional properties you would like to associate with the customer..._
@@ -391,7 +399,7 @@ You can immediately attach a Payment to the newly created Order by including the
 
 _When creating a Payment, you have the option of capturing funds immediately or placing an authorization on the payment card. If capture is not specified, it will default to capturing funds immediately._
 
-    __capture__ has 3 possible values: charge, auth, hold
+    __capture__ has 3 possible values: charge, authorize, hold
         charge - immediately capture the charge
         authorize - place an authorization on the charge
         hold - no-op, this just creates a stub payment allowing you to charge or authorize at a later time
@@ -759,22 +767,23 @@ __Arguments__
 
 __Arguments__
 
-    _id:              string
-    user_id:          string
-    created:          timestamp (Unix)
-    created_date:     timestamp (ISO_8601)
-    updated:          timestamp (Unix)
-    updated_date:     timestamp (ISO_8601)
-    name:             string
-    email:            string
-    addresses:        array
-    default_address:  object
-                      Contains name, line1, line2, city, state, zip, country, phone
-    card_token:       string
-    stripe:           object
-    description:      string
-    metadata:         object
-                      Store as many key-value pairs of extra data as you wish
+    _id:                string
+    user_id:            string
+    created:            timestamp (Unix)
+    created_date:       timestamp (ISO_8601)
+    updated:            timestamp (Unix)
+    updated_date:       timestamp (ISO_8601)
+    name:               string
+    email:              string
+    addresses:          array
+    default_address:    object
+                        Contains name, line1, line2, city, state, zip, country, phone
+    card_token:         string
+    stripe:             object
+    stripe_customer_id: string
+    description:        string
+    metadata:           object
+                        Store as many key-value pairs of extra data as you wish
 
 
 -------
@@ -789,7 +798,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: name, email, card_token, addresses, address, description, metadata
+    Optional: name, email, card_token, stripe_customer_id, addresses, address, description, metadata
 
 
 -------
@@ -827,6 +836,8 @@ __Arguments__
 
 ### Update customer
 
+Please note that if you update an existing Airbrite customer with `stripe_customer_id`, it will replace the previous values of the customer.
+
 __Endpoint__
 
     PUT https://api.airbrite.io/v2/customers/{CUSTOMER_ID}
@@ -834,7 +845,7 @@ __Endpoint__
 __Arguments__
 
     Required: customer_id
-    Optional: name, email, card_token, addresses, address, description, metadata
+    Optional: name, email, card_token, stripe_customer_id, addresses, address, description, metadata
 
 
 -------
