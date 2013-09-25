@@ -9,7 +9,7 @@ This tutorial describes how you can create orders with Airbrite. If you need hel
 
 ## Create a Simple Order
 
-This order 
+This order does not have any payment attached to it. I
 
 __Step 1: Make sure you've created a Product__
 
@@ -85,9 +85,10 @@ To create an order and charge the payment card, we'll be using [Stripe](https://
         -d "line_items[0][quantity]=1" \
         -d "payments[0][gateway]=stripe" \
         -d "payments[0][currency]=usd" \
-        -d "payments[0][gateway]=stripe" \
         -d "payments[0][card_token]={tok_xxxxxxxxxxxxxxx}"
 
 
 
 ## Creating A Pre-Order
+
+TBD
