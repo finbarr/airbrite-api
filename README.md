@@ -824,6 +824,7 @@ __Arguments__
     card_token:         string
     stripe:             object
     stripe_customer_id: string
+    match:              string (e.g. email)
     description:        string
     metadata:           object
                         Store as many key-value pairs of extra data as you wish
@@ -841,7 +842,7 @@ __Endpoint__
 __Arguments__
 
     Required: none
-    Optional: name, email, card_token, stripe_customer_id, addresses, address, description, metadata
+    Optional: name, email, match, card_token, stripe_customer_id, addresses, address, description, metadata
 
 
 -------
@@ -888,7 +889,7 @@ __Endpoint__
 __Arguments__
 
     Required: customer_id
-    Optional: name, email, card_token, stripe_customer_id, addresses, address, description, metadata
+    Optional: name, email, match, card_token, stripe_customer_id, addresses, address, description, metadata
 
 
 -------
