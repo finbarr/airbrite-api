@@ -88,7 +88,3 @@ To create an order and charge the payment card, we'll be using [Stripe](https://
         -d "payments[0][card_token]={tok_xxxxxxxxxxxxxxx}"
 
 
-
-## Creating A Pre-Order
-
-TBD
